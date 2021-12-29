@@ -4,7 +4,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 
-const Welcome = () => {
+const Main = () => {
+  const token = localStorage.getItem('slack-chat');
+  if (!token) {
+    window.location.replace('/login');
+  }
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -65,4 +69,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Main;
