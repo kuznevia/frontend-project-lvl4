@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import AuthContext from '../AuthContext';
 
 const Welcome = () => {
   const formik = useFormik({
@@ -23,6 +24,7 @@ const Welcome = () => {
           username,
           password,
         });
+        console.log(response);
         localStorage.setItem('slack-chat', response.data.token);
         window.location.replace('/');
         actions.resetForm({
@@ -34,10 +36,12 @@ const Welcome = () => {
           // you can also set the other form states here
         });
       } catch (e) {
+        console.log(e);
         actions.setStatus('Неверные имя или пароль');
       }
     },
   });
+
   return (
     <div>
       <h1>Войти</h1>
