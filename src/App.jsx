@@ -4,19 +4,19 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import Welcome from './components/Welcome.jsx';
-import Main from './components/Main.jsx';
+import Login from './components/Login.jsx';
+import Chat from './components/Chat.jsx';
 import NotFound from './components/NotFound.jsx';
 import AuthContext from './AuthContext.js';
 
-const isAuthenticated = localStorage.getItem('slack-chat');
+const authToken = localStorage.getItem('slack-chat');
 
 const App = () => (
-  <AuthContext.Provider value={isAuthenticated}>
+  <AuthContext.Provider value={{ authToken }}>
     <Router>
       <Routes>
-        <Route path="/login" element={<Welcome />} />
-        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Chat />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import AuthContext from '../AuthContext';
 
-const Welcome = () => {
+const Login = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -69,4 +68,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default Login;
