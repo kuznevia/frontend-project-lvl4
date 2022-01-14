@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthContext from '../AuthContext';
@@ -33,22 +33,15 @@ const Chat = () => {
     }
   };
 
-  initialRequest();
-
-  const renderChatlist = (chatList) => {
-    if (chatList.length === 0) {
-      return null;
-    }
-//реализовать функцию chatListMap 
-
-    return (
-      <ul />
-    )
-  }
+  useEffect(() => {
+    initialRequest();
+  }, []);
 
   return (
     <div>
-      {renderChatlist(chatList)}
+      <ul>
+        {chatList.map((item) => <li key={item.id}>{item.name}</li>)}
+      </ul>
     </div>
   );
 };
