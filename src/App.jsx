@@ -25,7 +25,7 @@ const App = () => {
         <Nav />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Chat />} />
+          <Route path="/" element={<Chat sendMessage={ sendMessage } />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

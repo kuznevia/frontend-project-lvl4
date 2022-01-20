@@ -1,13 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AuthContext from '../AuthContext';
 import { addChannels } from '../slices/chatsSlice.js';
+import Channels from './Channels.jsx';
+import Messages from './Messages.jsx';
 
-const Chat = () => {
+const Chat = ({ sendMessage }) => {
   const { authentificated } = useContext(AuthContext);
   const dispatch = useDispatch();
-  const chatList = useSelector((state) => state.chats.chats);
 
   if (!authentificated) {
     window.location.replace('/login');
@@ -38,13 +39,13 @@ const Chat = () => {
   }, []);
 
   return (
-    <div className="container-xxl bg-danger mx-5">
-      <div className="row">
+    <div className="container-xxl shadow mx-5 h-100">
+      <div className="row h-100 g-0">
         <div className="col-md-2">
-         asdasd
+          <Channels />
         </div>
         <div className="col-md-10">
-         asdasd
+          <Messages sendMessage={sendMessage} />
         </div>
       </div>
     </div>
