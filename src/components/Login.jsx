@@ -42,7 +42,7 @@ const Login = () => {
   });
 
   return (
-    <div>
+    <div className="container-lg">
       <h1>Войти</h1>
       <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
         <div className="form-group">

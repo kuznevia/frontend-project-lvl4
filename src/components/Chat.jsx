@@ -38,10 +38,15 @@ const Chat = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {chatList.map((item) => <li key={item.id}>{item.name}</li>)}
-      </ul>
+    <div className="container-xxl bg-danger mx-5">
+      <div className="row">
+        <div className="col-md-2">
+         asdasd
+        </div>
+        <div className="col-md-10">
+         asdasd
+        </div>
+      </div>
     </div>
   );
 };
