@@ -5,22 +5,22 @@ import AuthContext from '../AuthContext';
 import { addChannels } from '../slices/chatsSlice.js';
 
 const Chat = () => {
-  const { authToken } = useContext(AuthContext);
+  const { authentificated } = useContext(AuthContext);
   const dispatch = useDispatch();
   const chatList = useSelector((state) => state.chats.chats);
-  console.log(chatList);
 
-  if (!authToken) {
+  if (!authentificated) {
     window.location.replace('/login');
   }
 
   const url = '/api/v1/data';
 
   const initialRequest = async () => {
+    const token = localStorage.getItem('slack-chat');
     const authAxios = axios.create({
       baseUrl: url,
       headers: {
-        Authorization: `Bearer ${authToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 

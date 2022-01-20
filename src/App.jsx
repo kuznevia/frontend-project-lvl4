@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,20 +7,30 @@ import {
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import NotFound from './components/NotFound.jsx';
+import Nav from './components/NavBar.jsx';
 import AuthContext from './AuthContext.js';
 
-const authToken = localStorage.getItem('slack-chat');
+const App = () => {
+  const authToken = localStorage.getItem('slack-chat');
+  const [authentificated, setAuthentificated] = useState(!!authToken);
 
-const App = () => (
-  <AuthContext.Provider value={{ authToken }}>
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Chat />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
-  </AuthContext.Provider>
-);
+  const logout = () => {
+    localStorage.removeItem('slack-chat');
+    setAuthentificated(false);
+  };
+
+  return (
+    <AuthContext.Provider value={{ authentificated, logout }}>
+      <Router>
+        <Nav />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Chat />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
+  );
+};
 
 export default App;
