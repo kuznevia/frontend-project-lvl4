@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const Messages = ({ sendMessage }) => {
   const [text, setText] = useState('');
+  const messages = useSelector((state) => state.messages.messages);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -14,7 +15,28 @@ const Messages = ({ sendMessage }) => {
       console.log('empty');
       return;
     }
+    sendMessage({
+      message: text,
+    });
     setText('');
+  };
+
+  const renderMessages = () => {
+    if (!messages) {
+      return null;
+    }
+    if (messages.length === 0) {
+      return null;
+    }
+
+    return (
+      <div>
+        {messages
+          .map((el) => (
+            <div key={el.id}>{el.message}</div>
+          ))}
+      </div>
+    );
   };
 
   return (
@@ -25,7 +47,7 @@ const Messages = ({ sendMessage }) => {
           <span>Количество сообщений</span>
         </div>
         <div className="bg-white overflow-auto px-5">
-          <p>Messages</p>
+          {renderMessages()}
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleFormSubmit}>

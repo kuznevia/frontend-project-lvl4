@@ -41,6 +41,7 @@ const buildState = (defaultState) => {
 
 export default (app, defaultState = {}) => {
   const state = buildState(defaultState);
+  console.log(state);
 
   app.io.on('connect', (socket) => {
     console.log({ 'socket.id': socket.id });
