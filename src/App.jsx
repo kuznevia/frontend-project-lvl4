@@ -33,9 +33,9 @@ const App = () => {
     dispatch(sendNewMessages({ message }));
   });
 
-  const sendMessage = ({ message, activeUser }) => {
+  const sendMessage = ({ message, activeUser, activeChannelId }) => {
     if (socket.connected) {
-      socket.emit('newMessage', { message, activeUser });
+      socket.emit('newMessage', { message, activeUser, activeChannelId });
     } else {
       console.log('no connection');
     }

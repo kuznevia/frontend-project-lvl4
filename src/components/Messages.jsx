@@ -5,6 +5,9 @@ const Messages = ({ sendMessage }) => {
   const [text, setText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
   const activeUser = useSelector((state) => state.messages.activeUser);
+  const activeChannelId = useSelector((state) => state.channels.currentChannelId);
+
+  const filteredMessages = messages.filter((message) => message.activeChannelId === activeChannelId);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -19,6 +22,7 @@ const Messages = ({ sendMessage }) => {
     sendMessage({
       message: text,
       activeUser,
+      activeChannelId,
     });
     setText('');
   };
@@ -33,7 +37,7 @@ const Messages = ({ sendMessage }) => {
 
     return (
       <div>
-        {messages
+        {filteredMessages
           .map((el) => (
             <div key={el.id}>
               <span className="font-weight-bold">
@@ -48,12 +52,27 @@ const Messages = ({ sendMessage }) => {
     );
   };
 
+  const activeChannelName = () => {
+    const [activeChannel] = useSelector((state) => state.channels.channels
+      .filter((channel) => channel.id === activeChannelId));
+    if (activeChannel === undefined) {
+      return null;
+    }
+    return activeChannel.name;
+  };
+
+  const messageCount = filteredMessages.length;
+
   return (
     <>
       <div className="bg-white d-flex flex-column h-100">
         <div className="bg-light mb-5 w-100">
-          <p>Активный канал</p>
-          <span>Количество сообщений</span>
+          <p>{activeChannelName()}</p>
+          <span>
+            {messageCount}
+            {' '}
+            messages
+          </span>
         </div>
         <div className="bg-white overflow-auto px-5">
           {renderMessages()}

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import AuthContext from '../AuthContext';
-import { addChannels } from '../slices/chatsSlice.js';
+import { addChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -30,9 +30,10 @@ const Chat = ({ sendMessage }) => {
 
     try {
       const response = await authAxios.get(url);
-      const { channels, messages } = response.data;
+      const { channels, messages, currentChannelId } = response.data;
       dispatch(addChannels(channels));
       dispatch(visualizeInitialMessages(messages));
+      dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
       console.log(e);
     }

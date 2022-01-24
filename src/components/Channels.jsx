@@ -1,15 +1,26 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import cn from 'classnames';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentChannel } from '../slices/channelsSlice.js';
 
 const Channels = () => {
-  const chatList = useSelector((state) => state.chats.chats);
+  const channelsList = useSelector((state) => state.channels.channels);
+  const activeChannelId = useSelector((state) => state.channels.currentChannelId);
+  const dispatch = useDispatch();
+
+  const channelsClassNames = cn('mt-3', 'btn-light');
+  const activeChannelClassnames = cn('mt-3', 'btn', 'btn-primary');
+
+  const setCurrent = (e) => {
+    dispatch(setCurrentChannel(Number(e.target.id)));
+  };
 
   return (
-    <div className="bg-light pt-5 h-100 border-right">
-      Channels
-      <ul>
-        {chatList.map((item) => <li key={item.id}>{item.name}</li>)}
-      </ul>
+    <div className="d-flex flex-column align-items-center bg-light pt-5 h-100 border-right">
+      <p>Channels</p>
+      <div className="d-flex flex-column">
+        {channelsList.map((item) => <button type="button" onClick={setCurrent} className={activeChannelId === item.id ? activeChannelClassnames : channelsClassNames} key={item.id} id={item.id}>{item.name}</button>)}
+      </div>
     </div>
   );
 };
