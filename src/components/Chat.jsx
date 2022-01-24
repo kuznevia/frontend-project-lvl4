@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import AuthContext from '../AuthContext';
 import { addChannels } from '../slices/chatsSlice.js';
+import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
@@ -14,10 +15,12 @@ const Chat = ({ sendMessage }) => {
     window.location.replace('/login');
   }
 
+  dispatch(setActiveUser(localStorage.getItem('username')));
+
   const url = '/api/v1/data';
 
   const initialRequest = async () => {
-    const token = localStorage.getItem('slack-chat');
+    const token = localStorage.getItem('token');
     const authAxios = axios.create({
       baseUrl: url,
       headers: {
@@ -27,8 +30,9 @@ const Chat = ({ sendMessage }) => {
 
     try {
       const response = await authAxios.get(url);
-      const { channels } = response.data;
+      const { channels, messages } = response.data;
       dispatch(addChannels(channels));
+      dispatch(visualizeInitialMessages(messages));
     } catch (e) {
       console.log(e);
     }

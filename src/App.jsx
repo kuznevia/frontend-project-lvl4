@@ -14,12 +14,12 @@ import Nav from './components/NavBar.jsx';
 import AuthContext from './AuthContext.js';
 
 const App = () => {
-  const authToken = localStorage.getItem('slack-chat');
+  const authToken = localStorage.getItem('token');
   const [authentificated, setAuthentificated] = useState(!!authToken);
   const dispatch = useDispatch();
 
   const logout = () => {
-    localStorage.removeItem('slack-chat');
+    localStorage.removeItem('token');
     setAuthentificated(false);
   };
 
@@ -33,9 +33,9 @@ const App = () => {
     dispatch(sendNewMessages({ message }));
   });
 
-  const sendMessage = ({ message }) => {
+  const sendMessage = ({ message, activeUser }) => {
     if (socket.connected) {
-      socket.emit('newMessage', { message });
+      socket.emit('newMessage', { message, activeUser });
     } else {
       console.log('no connection');
     }

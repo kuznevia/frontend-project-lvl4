@@ -41,7 +41,6 @@ const buildState = (defaultState) => {
 
 export default (app, defaultState = {}) => {
   const state = buildState(defaultState);
-  console.log(state);
 
   app.io.on('connect', (socket) => {
     console.log({ 'socket.id': socket.id });
@@ -54,6 +53,7 @@ export default (app, defaultState = {}) => {
       state.messages.push(messageWithId);
       acknowledge({ status: 'ok' });
       app.io.emit('newMessage', messageWithId);
+      console.log(state);
     });
 
     socket.on('newChannel', (channel, acknowledge = _.noop) => {

@@ -23,8 +23,8 @@ const Login = () => {
           username,
           password,
         });
-        console.log(response);
-        localStorage.setItem('slack-chat', response.data.token);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
         window.location.replace('/');
         actions.resetForm({
           values: {

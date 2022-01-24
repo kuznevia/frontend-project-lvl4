@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 const Messages = ({ sendMessage }) => {
   const [text, setText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
+  const activeUser = useSelector((state) => state.messages.activeUser);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -17,6 +18,7 @@ const Messages = ({ sendMessage }) => {
     }
     sendMessage({
       message: text,
+      activeUser,
     });
     setText('');
   };
@@ -33,7 +35,14 @@ const Messages = ({ sendMessage }) => {
       <div>
         {messages
           .map((el) => (
-            <div key={el.id}>{el.message}</div>
+            <div key={el.id}>
+              <span className="font-weight-bold">
+                {el.activeUser}
+                :
+                {' '}
+              </span>
+              {el.message}
+            </div>
           ))}
       </div>
     );
