@@ -2,12 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import AuthContext from '../AuthContext';
-import { addChannels, setCurrentChannel } from '../slices/channelsSlice.js';
+import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
-const Chat = ({ sendMessage }) => {
+const Chat = ({ sendMessage, addChannel }) => {
   const { authentificated } = useContext(AuthContext);
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const Chat = ({ sendMessage }) => {
     try {
       const response = await authAxios.get(url);
       const { channels, messages, currentChannelId } = response.data;
-      dispatch(addChannels(channels));
+      dispatch(renderInitialChannels(channels));
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
@@ -44,16 +44,18 @@ const Chat = ({ sendMessage }) => {
   }, []);
 
   return (
-    <div className="container-xxl shadow mx-5 h-100">
-      <div className="row h-100 g-0">
-        <div className="col-md-2">
-          <Channels />
-        </div>
-        <div className="col-md-10">
-          <Messages sendMessage={sendMessage} />
+    <>
+      <div className="container-xxl shadow mx-5 h-100">
+        <div className="row h-100 g-0">
+          <div className="col-md-2">
+            <Channels addChannel={addChannel} />
+          </div>
+          <div className="col-md-10">
+            <Messages sendMessage={sendMessage} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

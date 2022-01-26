@@ -6,7 +6,7 @@ const Nav = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white mb-5">
       <div className="container">
-        <div className="navbar-brand">Chat</div>
+        <div className="navbar-brand">Kuznevia Chat</div>
         {authentificated && <button className="btn btn-primary" onClick={logout} type="button">Logout</button>}
       </div>
     </nav>

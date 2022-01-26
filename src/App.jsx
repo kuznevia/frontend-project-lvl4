@@ -7,6 +7,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { sendNewMessages } from './slices/messagesSlice.js';
+import { addNewChannel, setCurrentChannel } from './slices/channelsSlice.js';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import NotFound from './components/NotFound.jsx';
@@ -33,9 +34,23 @@ const App = () => {
     dispatch(sendNewMessages({ message }));
   });
 
+  socket.on('newChannel', (channel) => {
+    const { id } = channel;
+    dispatch(addNewChannel({ channel }));
+    dispatch(setCurrentChannel(id));
+  });
+
   const sendMessage = ({ message, activeUser, activeChannelId }) => {
     if (socket.connected) {
       socket.emit('newMessage', { message, activeUser, activeChannelId });
+    } else {
+      console.log('no connection');
+    }
+  };
+
+  const addChannel = ({ name }) => {
+    if (socket.connected) {
+      socket.emit('newChannel', { name });
     } else {
       console.log('no connection');
     }
@@ -47,7 +62,7 @@ const App = () => {
         <Nav />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Chat sendMessage={sendMessage} />} />
+          <Route path="/" element={<Chat sendMessage={sendMessage} addChannel={addChannel} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
