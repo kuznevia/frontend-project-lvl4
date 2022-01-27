@@ -6,9 +6,8 @@ const Messages = ({ sendMessage }) => {
   const messages = useSelector((state) => state.messages.messages);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
-  console.log(messages);
 
-  const filteredMessages = messages.filter((message) => message.activeChannelId === activeChannelId);
+  const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -22,8 +21,8 @@ const Messages = ({ sendMessage }) => {
     }
     sendMessage({
       message: text,
-      activeUser,
-      activeChannelId,
+      user: activeUser,
+      channelId: activeChannelId,
     });
     setText('');
   };
@@ -42,7 +41,7 @@ const Messages = ({ sendMessage }) => {
           .map((el) => (
             <div key={el.id}>
               <span className="font-weight-bold">
-                {el.activeUser}
+                {el.user}
                 :
                 {' '}
               </span>

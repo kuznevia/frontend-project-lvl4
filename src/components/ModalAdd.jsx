@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
 
-const ModalVindow = ({ addChannel }) => {
+const ModalVindowAdd = ({ addChannel }) => {
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
@@ -66,4 +66,4 @@ const ModalVindow = ({ addChannel }) => {
   );
 };
 
-export default ModalVindow;
+export default ModalVindowAdd;

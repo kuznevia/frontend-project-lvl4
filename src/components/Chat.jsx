@@ -7,7 +7,7 @@ import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
-const Chat = ({ sendMessage, addChannel }) => {
+const Chat = ({ sendMessage, addChannel, removeChannel }) => {
   const { authentificated } = useContext(AuthContext);
   const dispatch = useDispatch();
 
@@ -48,7 +48,7 @@ const Chat = ({ sendMessage, addChannel }) => {
       <div className="container-xxl shadow mx-5 h-100">
         <div className="row h-100 g-0">
           <div className="col-md-2">
-            <Channels addChannel={addChannel} />
+            <Channels addChannel={addChannel} removeChannel={removeChannel} />
           </div>
           <div className="col-md-10">
             <Messages sendMessage={sendMessage} />

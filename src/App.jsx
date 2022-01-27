@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-wrap-multilines */
+/* eslint-disable react/jsx-closing-bracket-location */
 import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -7,7 +9,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { sendNewMessages } from './slices/messagesSlice.js';
-import { addNewChannel, setCurrentChannel } from './slices/channelsSlice.js';
+import { addNewChannel, setCurrentChannel, deleteChannel } from './slices/channelsSlice.js';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import NotFound from './components/NotFound.jsx';
@@ -40,9 +42,14 @@ const App = () => {
     dispatch(setCurrentChannel(id));
   });
 
-  const sendMessage = ({ message, activeUser, activeChannelId }) => {
+  socket.on('removeChannel', (id) => {
+    dispatch(deleteChannel(id));
+    dispatch(setCurrentChannel(1));
+  });
+
+  const sendMessage = ({ message, user, channelId }) => {
     if (socket.connected) {
-      socket.emit('newMessage', { message, activeUser, activeChannelId });
+      socket.emit('newMessage', { message, user, channelId });
     } else {
       console.log('no connection');
     }
@@ -56,13 +63,27 @@ const App = () => {
     }
   };
 
+  const removeChannel = ({ id }) => {
+    if (socket.connected) {
+      socket.emit('removeChannel', { id });
+    } else {
+      console.log('no connection');
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ authentificated, logout }}>
       <Router>
         <Nav />
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Chat sendMessage={sendMessage} addChannel={addChannel} />} />
+          <Route
+            path="/"
+            element={<Chat
+              sendMessage={sendMessage}
+              addChannel={addChannel}
+              removeChannel={removeChannel} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
