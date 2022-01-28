@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
+import { toast } from 'react-toastify';
 
 const ModalVindowAdd = ({ addChannel }) => {
   const [show, setShow] = useState(false);
@@ -34,6 +35,7 @@ const ModalVindowAdd = ({ addChannel }) => {
     addChannel({ name: text });
     setText('');
     setShow(false);
+    toast.success(i18next.t('channelAdded'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {

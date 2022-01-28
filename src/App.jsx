@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
 import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
@@ -15,6 +16,7 @@ import {
   deleteChannel,
   channelRename,
 } from './slices/channelsSlice.js';
+import 'react-toastify/dist/ReactToastify.css';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import Registration from './components/Registration.jsx';
@@ -107,6 +109,17 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/registration" element={<Registration />} />
         </Routes>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Router>
     </AuthContext.Provider>
   );
