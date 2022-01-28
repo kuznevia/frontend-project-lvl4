@@ -46,13 +46,28 @@ const Login = () => {
       <h1>Войти</h1>
       <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
         <div className="form-group">
-          <input onChange={formik.handleChange} value={formik.values.username} className="form-control" name="username" id="username" placeholder="Имя пользователя" />
+          <input
+            onChange={formik.handleChange}
+            value={formik.values.username}
+            className="form-control"
+            name="username"
+            id="username"
+            placeholder="Имя пользователя"
+          />
           {formik.touched.username && formik.errors.username ? (
             <div className="text-danger">{formik.errors.username}</div>
           ) : null}
         </div>
         <div className="form-group">
-          <input onChange={formik.handleChange} value={formik.values.password} type="password" className="form-control" name="password" id="password" placeholder="Пароль" />
+          <input
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            type="password"
+            className="form-control"
+            name="password"
+            id="password"
+            placeholder="Пароль"
+          />
           {formik.touched.password && formik.errors.password ? (
             <div className="text-danger">{formik.errors.password}</div>
           ) : null}

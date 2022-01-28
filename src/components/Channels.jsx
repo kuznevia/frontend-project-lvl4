@@ -20,7 +20,7 @@ const Channels = ({ addChannel, removeChannel, renameChannel }) => {
   return (
     <div className="d-flex flex-column align-items-center bg-light pt-5 h-100 border-right">
       <div className="d-flex justify-content-around align-items-center w-100">
-        <p className="m-0 p-0">Channels</p>
+        <p className="m-0 p-0">Каналы</p>
         <ModalVindowAdd addChannel={addChannel} />
       </div>
       <div className="d-flex flex-column">

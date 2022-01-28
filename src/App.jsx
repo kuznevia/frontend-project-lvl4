@@ -17,6 +17,7 @@ import {
 } from './slices/channelsSlice.js';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
+import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
 import AuthContext from './AuthContext.js';
@@ -104,6 +105,7 @@ const App = () => {
               renameChannel={renameChannel} />}
           />
           <Route path="*" element={<NotFound />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </Router>
     </AuthContext.Provider>

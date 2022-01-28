@@ -71,7 +71,7 @@ const Messages = ({ sendMessage }) => {
           <span>
             {messageCount}
             {' '}
-            messages
+            сообщений
           </span>
         </div>
         <div className="bg-white overflow-auto px-5">

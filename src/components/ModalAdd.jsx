@@ -47,7 +47,7 @@ const ModalVindowAdd = ({ addChannel }) => {
       </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title>Add new channel</Modal.Title>
+          <Modal.Title>Добавить новый канал</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input className={inputClassNames} value={text} onChange={handleInputChange} />
@@ -55,10 +55,10 @@ const ModalVindowAdd = ({ addChannel }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cancel
+            Отмена
           </Button>
           <Button variant="primary" onClick={handleAdd}>
-            Add
+            Добавить
           </Button>
         </Modal.Footer>
       </Modal>

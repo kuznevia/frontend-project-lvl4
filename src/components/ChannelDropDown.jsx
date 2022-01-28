@@ -75,28 +75,28 @@ const ChannelDropDown = ({
       <Dropdown.Toggle split variant={activeClasses} id="dropdown-split-basic" />
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleShowRemove}> Delete</Dropdown.Item>
-        <Dropdown.Item onClick={handleShowRename}>Rename</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRemove}>Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRename}>Переименовать</Dropdown.Item>
       </Dropdown.Menu>
       <Modal show={showRemove} onHide={handleCloseRemove}>
         <Modal.Header>
-          <Modal.Title>Add new channel</Modal.Title>
+          <Modal.Title>Удалить канал</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you Sure?
+          Уверены?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRemove}>
-            No
+            Нет
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            Yes
+            Да
           </Button>
         </Modal.Footer>
       </Modal>
       <Modal show={showRename} onHide={handleCloseRename}>
         <Modal.Header>
-          <Modal.Title>New channel name</Modal.Title>
+          <Modal.Title>Задайте новое имя каналу</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input className={inputClassNames} value={text} onChange={handleInputChange} />
@@ -104,10 +104,10 @@ const ChannelDropDown = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRename}>
-            Cancel
+            Отмена
           </Button>
           <Button variant="primary" onClick={handleRename}>
-            Rename
+            Переименовать
           </Button>
         </Modal.Footer>
       </Modal>
