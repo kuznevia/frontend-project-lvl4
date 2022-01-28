@@ -26,7 +26,7 @@ const Channels = ({ addChannel, removeChannel, renameChannel }) => {
       </div>
       <div className="d-flex flex-column">
         {channelsList.map((item) => (
-          <div className="d-flex justify-content-around align-items-center w-100">
+          <div key={item.id} id={item.id} className="d-flex justify-content-around align-items-center w-100">
             <ChannelDropDown
               setCurrent={setCurrent}
               removeChannel={removeChannel}

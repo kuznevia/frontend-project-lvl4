@@ -15,13 +15,12 @@ const ChannelDropDown = ({
   removeChannel,
   renameChannel,
   activeClasses,
-  key,
   id,
   itemName,
   removable,
 }) => {
   if (!removable) {
-    return <Button onClick={setCurrent} variant={activeClasses} key={key} id={id}>{itemName}</Button>;
+    return <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>{itemName}</Button>;
   }
 
   const [showRemove, setShowRemove] = useState(false);
@@ -74,7 +73,7 @@ const ChannelDropDown = ({
 
   return (
     <Dropdown as={ButtonGroup}>
-      <Button onClick={setCurrent} variant={activeClasses} key={key} id={id}>{itemName}</Button>
+      <Button onClick={setCurrent} variant={activeClasses}>{itemName}</Button>
 
       <Dropdown.Toggle split variant={activeClasses} id="dropdown-split-basic" />
 
