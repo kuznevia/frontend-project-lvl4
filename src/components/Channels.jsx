@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
+import i18next from 'i18next';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
 import ModalVindowAdd from './ModalAdd.jsx';
 import ChannelDropDown from './ChannelDropDown.jsx';
@@ -20,7 +21,7 @@ const Channels = ({ addChannel, removeChannel, renameChannel }) => {
   return (
     <div className="d-flex flex-column align-items-center bg-light pt-5 h-100 border-right">
       <div className="d-flex justify-content-around align-items-center w-100">
-        <p className="m-0 p-0">Каналы</p>
+        <p className="m-0 p-0">{i18next.t('channels')}</p>
         <ModalVindowAdd addChannel={addChannel} />
       </div>
       <div className="d-flex flex-column">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import i18next from 'i18next';
 import { useSelector } from 'react-redux';
 
 const Messages = ({ sendMessage }) => {
@@ -71,7 +72,7 @@ const Messages = ({ sendMessage }) => {
           <span>
             {messageCount}
             {' '}
-            сообщений
+            {i18next.t('messages')}
           </span>
         </div>
         <div className="bg-white overflow-auto px-5">

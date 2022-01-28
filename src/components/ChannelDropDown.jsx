@@ -6,6 +6,7 @@ import {
   Modal,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import i18next from 'i18next';
 import cn from 'classnames';
 
 const ChannelDropDown = ({
@@ -75,28 +76,28 @@ const ChannelDropDown = ({
       <Dropdown.Toggle split variant={activeClasses} id="dropdown-split-basic" />
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleShowRemove}>Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={handleShowRename}>Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRemove}>{i18next.t('delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRename}>{i18next.t('rename')}</Dropdown.Item>
       </Dropdown.Menu>
       <Modal show={showRemove} onHide={handleCloseRemove}>
         <Modal.Header>
-          <Modal.Title>Удалить канал</Modal.Title>
+          <Modal.Title>{i18next.t('deleteСhannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Уверены?
+          {i18next.t('youSure')}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRemove}>
-            Нет
+            {i18next.t('no')}
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            Да
+            {i18next.t('yes')}
           </Button>
         </Modal.Footer>
       </Modal>
       <Modal show={showRename} onHide={handleCloseRename}>
         <Modal.Header>
-          <Modal.Title>Задайте новое имя каналу</Modal.Title>
+          <Modal.Title>{i18next.t('setNewChannelName')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input className={inputClassNames} value={text} onChange={handleInputChange} />
@@ -104,10 +105,10 @@ const ChannelDropDown = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRename}>
-            Отмена
+            {i18next.t('cancel')}
           </Button>
           <Button variant="primary" onClick={handleRename}>
-            Переименовать
+            {i18next.t('rename')}
           </Button>
         </Modal.Footer>
       </Modal>

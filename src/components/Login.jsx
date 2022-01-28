@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import i18next from 'i18next';
 import * as Yup from 'yup';
 import axios from 'axios';
 
@@ -43,7 +44,7 @@ const Login = () => {
 
   return (
     <div className="container-lg">
-      <h1>Войти</h1>
+      <h1>{i18next.t('login')}</h1>
       <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
         <div className="form-group">
           <input
@@ -73,11 +74,11 @@ const Login = () => {
           ) : null}
         </div>
         <div className="text-danger">{formik.status}</div>
-        <button type="submit" className="btn btn-primary w-100">Войти</button>
+        <button type="submit" className="btn btn-primary w-100">{i18next.t('login')}</button>
       </form>
       <p className="bg-light bg-gradient text-center p-3">
-        Нет аккаунта?
-        <Link to="/registration"> Регистрация</Link>
+        {i18next.t('noAccount')}
+        <Link to="/registration">{i18next.t('registration')}</Link>
       </p>
     </div>
   );

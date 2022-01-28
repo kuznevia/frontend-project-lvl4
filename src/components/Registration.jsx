@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import i18next from 'i18next';
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
@@ -53,7 +54,7 @@ const Registration = () => {
     <>
       {authentificated && window.location.replace('/')}
       <div className="container-lg">
-        <h1>Зарегистрироваться</h1>
+        <h1>{i18next.t('registr')}</h1>
         <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
           <div className="form-group">
             <input
@@ -97,7 +98,7 @@ const Registration = () => {
             ) : null}
           </div>
           <div className="text-danger">{formik.status}</div>
-          <button type="submit" className="btn btn-primary w-100">Зарегистрироваться</button>
+          <button type="submit" className="btn btn-primary w-100">{i18next.t('registr')}</button>
         </form>
       </div>
     </>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import i18next from 'i18next';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
@@ -47,7 +48,7 @@ const ModalVindowAdd = ({ addChannel }) => {
       </button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title>Добавить новый канал</Modal.Title>
+          <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <input className={inputClassNames} value={text} onChange={handleInputChange} />
@@ -55,10 +56,10 @@ const ModalVindowAdd = ({ addChannel }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Отмена
+            {i18next.t('cancel')}
           </Button>
           <Button variant="primary" onClick={handleAdd}>
-            Добавить
+            {i18next.t('add')}
           </Button>
         </Modal.Footer>
       </Modal>

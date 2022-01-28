@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import i18next from 'i18next';
 import AuthContext from '../AuthContext';
 
 const Nav = () => {
@@ -8,9 +9,12 @@ const Nav = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white mb-5">
       <div className="container">
         <div className="btn navbar-brand" href="/">
-          <Link className="text-dark text-decoration-none" to="/"> Hexlet Chat</Link>
+          <Link className="text-dark text-decoration-none" to="/">{i18next.t('hexletChat')}</Link>
         </div>
-        {authentificated && <button className="btn btn-primary" onClick={logout} type="button">Выйти</button>}
+        {
+          authentificated
+          && <button className="btn btn-primary" onClick={logout} type="button">{i18next.t('logout')}</button>
+        }
       </div>
     </nav>
   );
