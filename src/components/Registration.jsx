@@ -63,7 +63,7 @@ const Registration = () => {
               className="form-control"
               name="username"
               id="username"
-              placeholder="Имя пользователя"
+              placeholder={i18next.t('nickName')}
             />
             {formik.touched.username && formik.errors.username ? (
               <div className="text-danger">{formik.errors.username}</div>
@@ -77,7 +77,7 @@ const Registration = () => {
               className="form-control"
               name="password"
               id="password"
-              placeholder="Пароль"
+              placeholder={i18next.t('password')}
             />
             {formik.touched.password && formik.errors.password ? (
               <div className="text-danger">{formik.errors.password}</div>
@@ -91,7 +91,7 @@ const Registration = () => {
               className="form-control"
               name="passwordConfirm"
               id="passwordConfirm"
-              placeholder="Подтверждение пароля"
+              placeholder={i18next.t('passwordCornfirmation')}
             />
             {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
               <div className="text-danger">{formik.errors.passwordConfirm}</div>

@@ -37,7 +37,7 @@ const Login = () => {
         });
       } catch (e) {
         console.log(e);
-        actions.setStatus('Неверные имя или пароль');
+        actions.setStatus(i18next.t('notCorrectNameOrPassword'));
       }
     },
   });
@@ -53,7 +53,7 @@ const Login = () => {
             className="form-control"
             name="username"
             id="username"
-            placeholder="Имя пользователя"
+            placeholder={i18next.t('yourNick')}
           />
           {formik.touched.username && formik.errors.username ? (
             <div className="text-danger">{formik.errors.username}</div>
@@ -67,7 +67,7 @@ const Login = () => {
             className="form-control"
             name="password"
             id="password"
-            placeholder="Пароль"
+            placeholder={i18next.t('password')}
           />
           {formik.touched.password && formik.errors.password ? (
             <div className="text-danger">{formik.errors.password}</div>

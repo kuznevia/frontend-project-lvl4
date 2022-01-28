@@ -24,6 +24,11 @@ const resources = {
       channelAdded: 'Канал добавлен',
       channelRemoved: 'Канал удален',
       channelRenamed: 'Канал переименован',
+      yourNick: 'Ваш ник',
+      nickName: 'Имя пользователя',
+      password: 'Пароль',
+      notCorrectNameOrPassword: 'Неверные имя или пароль',
+      passwordCornfirmation: 'Подтвердите пароль',
     },
   },
 };
