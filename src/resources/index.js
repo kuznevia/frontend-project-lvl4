@@ -22,6 +22,8 @@ const resources = {
       home: 'Перейти на стартовую страницу',
       registr: 'Зарегестрироваться',
       channelAdded: 'Канал добавлен',
+      channelRemoved: 'Канал удален',
+      channelRenamed: 'Канал переименован',
     },
   },
 };

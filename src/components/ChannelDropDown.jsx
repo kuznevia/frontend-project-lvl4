@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import i18next from 'i18next';
+import { toast } from 'react-toastify';
 import cn from 'classnames';
 
 const ChannelDropDown = ({
@@ -47,6 +48,7 @@ const ChannelDropDown = ({
 
   const handleDelete = () => {
     removeChannel({ id });
+    toast.success(i18next.t('channelRemoved'));
   };
 
   const handleRename = () => {
@@ -62,6 +64,7 @@ const ChannelDropDown = ({
     renameChannel({ name: text, id });
     setText('');
     setShowRename(false);
+    toast.success(i18next.t('channelRenamed'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
