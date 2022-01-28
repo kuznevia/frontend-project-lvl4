@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import i18next from 'i18next';
 import { useSelector } from 'react-redux';
+import filter from 'leo-profanity';
 
 const Messages = ({ sendMessage }) => {
   const [text, setText] = useState('');
@@ -9,6 +10,10 @@ const Messages = ({ sendMessage }) => {
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
 
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
+
+  useEffect(() => {
+    filter.loadDictionary('ru');
+  }, []);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -21,7 +26,7 @@ const Messages = ({ sendMessage }) => {
       return;
     }
     sendMessage({
-      message: text,
+      message: filter.clean(text),
       user: activeUser,
       channelId: activeChannelId,
     });
