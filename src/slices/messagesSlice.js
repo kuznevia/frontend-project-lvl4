@@ -18,9 +18,18 @@ export const messagesSlice = createSlice({
     setActiveUser: (state, action) => {
       state.activeUser = action.payload;
     },
+    deleteMessages: (state, action) => {
+      const { id } = action.payload;
+      state.messages = state.messages.filter((message) => message.channelId !== id);
+    },
   },
 });
 
-export const { sendNewMessages, visualizeInitialMessages, setActiveUser } = messagesSlice.actions;
+export const {
+  sendNewMessages,
+  visualizeInitialMessages,
+  setActiveUser,
+  deleteMessages,
+} = messagesSlice.actions;
 
 export default messagesSlice.reducer;

@@ -8,8 +8,13 @@ import {
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { io } from 'socket.io-client';
-import { sendNewMessages } from './slices/messagesSlice.js';
-import { addNewChannel, setCurrentChannel, deleteChannel } from './slices/channelsSlice.js';
+import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
+import {
+  addNewChannel,
+  setCurrentChannel,
+  deleteChannel,
+  channelRename,
+} from './slices/channelsSlice.js';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import NotFound from './components/NotFound.jsx';
@@ -44,7 +49,12 @@ const App = () => {
 
   socket.on('removeChannel', (id) => {
     dispatch(deleteChannel(id));
+    dispatch(deleteMessages(id));
     dispatch(setCurrentChannel(1));
+  });
+
+  socket.on('renameChannel', (id, name) => {
+    dispatch(channelRename(id, name));
   });
 
   const sendMessage = ({ message, user, channelId }) => {
@@ -71,6 +81,14 @@ const App = () => {
     }
   };
 
+  const renameChannel = ({ id, name }) => {
+    if (socket.connected) {
+      socket.emit('renameChannel', { id, name });
+    } else {
+      console.log('no connection');
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ authentificated, logout }}>
       <Router>
@@ -82,7 +100,8 @@ const App = () => {
             element={<Chat
               sendMessage={sendMessage}
               addChannel={addChannel}
-              removeChannel={removeChannel} />}
+              removeChannel={removeChannel}
+              renameChannel={renameChannel} />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

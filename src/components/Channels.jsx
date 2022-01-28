@@ -5,7 +5,7 @@ import { setCurrentChannel } from '../slices/channelsSlice.js';
 import ModalVindowAdd from './ModalAdd.jsx';
 import ChannelDropDown from './ChannelDropDown.jsx';
 
-const Channels = ({ addChannel, removeChannel }) => {
+const Channels = ({ addChannel, removeChannel, renameChannel }) => {
   const channelsList = useSelector((state) => state.channels.channels);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const Channels = ({ addChannel, removeChannel }) => {
             <ChannelDropDown
               setCurrent={setCurrent}
               removeChannel={removeChannel}
+              renameChannel={renameChannel}
               activeClasses={activeChannelId === item.id ? activeChannelClassnames : channelsClassNames}
               key={item.id}
               id={item.id}
