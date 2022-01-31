@@ -43,43 +43,53 @@ const Login = () => {
   });
 
   return (
-    <div className="container-lg">
-      <h1>{i18next.t('login')}</h1>
-      <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-        <div className="form-group">
-          <input
-            onChange={formik.handleChange}
-            value={formik.values.username}
-            className="form-control"
-            name="username"
-            id="username"
-            placeholder={i18next.t('yourNick')}
-          />
-          {formik.touched.username && formik.errors.username ? (
-            <div className="text-danger">{formik.errors.username}</div>
-          ) : null}
+    <div className="container-fluid h-100">
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
+          <div className="card shadow-sm">
+            <div className="card-body row">
+              <form className="col-12" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
+                <h1>{i18next.t('login')}</h1>
+                <div className="form-group w-25">
+                  <input
+                    onChange={formik.handleChange}
+                    value={formik.values.username}
+                    className="form-control"
+                    name="username"
+                    id="username"
+                    placeholder={i18next.t('yourNick')}
+                  />
+                  {formik.touched.username && formik.errors.username ? (
+                    <div className="text-danger">{formik.errors.username}</div>
+                  ) : null}
+                </div>
+                <div className="form-group w-25">
+                  <input
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                    type="password"
+                    className="form-control"
+                    name="password"
+                    id="password"
+                    placeholder={i18next.t('password')}
+                  />
+                  {formik.touched.password && formik.errors.password ? (
+                    <div className="text-danger">{formik.errors.password}</div>
+                  ) : null}
+                </div>
+                <div className="text-danger">{formik.status}</div>
+                <button type="submit" className="btn btn-primary w-25">{i18next.t('login')}</button>
+              </form>
+            </div>
+            <div className="card-footer w-100">
+              <div className="text-center">
+                <span>{i18next.t('noAccount')}</span>
+                <Link to="/registration">{i18next.t('registration')}</Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="form-group">
-          <input
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            type="password"
-            className="form-control"
-            name="password"
-            id="password"
-            placeholder={i18next.t('password')}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div className="text-danger">{formik.errors.password}</div>
-          ) : null}
-        </div>
-        <div className="text-danger">{formik.status}</div>
-        <button type="submit" className="btn btn-primary w-100">{i18next.t('login')}</button>
-      </form>
-      <p className="bg-light bg-gradient text-center p-3">
-        {i18next.t('noAccount')}
-        <Link to="/registration">{i18next.t('registration')}</Link>
-      </p>
+      </div>
     </div>
   );
 };

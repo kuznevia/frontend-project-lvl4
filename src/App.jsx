@@ -95,20 +95,22 @@ const App = () => {
   return (
     <AuthContext.Provider value={{ authentificated, logout }}>
       <Router>
-        <Nav />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={<Chat
-              sendMessage={sendMessage}
-              addChannel={addChannel}
-              removeChannel={removeChannel}
-              renameChannel={renameChannel} />}
-          />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/registration" element={<Registration />} />
-        </Routes>
+        <div className="d-flex flex-column h-100">
+          <Nav />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/"
+              element={<Chat
+                sendMessage={sendMessage}
+                addChannel={addChannel}
+                removeChannel={removeChannel}
+                renameChannel={renameChannel} />}
+            />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/registration" element={<Registration />} />
+          </Routes>
+        </div>
         <ToastContainer
           position="top-right"
           autoClose={5000}

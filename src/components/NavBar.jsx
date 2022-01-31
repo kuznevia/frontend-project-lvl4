@@ -6,7 +6,7 @@ import AuthContext from '../AuthContext';
 const Nav = () => {
   const { authentificated, logout } = useContext(AuthContext);
   return (
-    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white mb-5">
+    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <div className="btn navbar-brand" href="/">
           <Link className="text-dark text-decoration-none" to="/">{i18next.t('hexletChat')}</Link>
