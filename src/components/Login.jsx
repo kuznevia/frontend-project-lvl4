@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import i18next from 'i18next';
 import * as Yup from 'yup';
 import axios from 'axios';
+import cn from 'classnames';
 
 const Login = () => {
+  const [inputValid, setInputValid] = useState(true);
+  const inputClassnames = cn('form-control', {
+    'is-invalid': !inputValid,
+  });
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -38,6 +44,7 @@ const Login = () => {
       } catch (e) {
         console.log(e);
         actions.setStatus(i18next.t('notCorrectNameOrPassword'));
+        setInputValid(false);
       }
     },
   });
@@ -47,41 +54,40 @@ const Login = () => {
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <div className="card shadow-sm">
-            <div className="card-body row">
-              <form className="col-12" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h1>{i18next.t('login')}</h1>
-                <div className="form-group w-25">
+            <div className="card-body row p-5">
+              <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
+                <h1 className="text-center mb-4">{i18next.t('login')}</h1>
+                <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    className="form-control"
+                    className={inputClassnames}
+                    required
                     name="username"
                     id="username"
                     placeholder={i18next.t('yourNick')}
                   />
-                  {formik.touched.username && formik.errors.username ? (
-                    <div className="text-danger">{formik.errors.username}</div>
-                  ) : null}
                 </div>
-                <div className="form-group w-25">
+                <div className="form-floating mb-4 form-group">
                   <input
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     type="password"
-                    className="form-control"
+                    className={inputClassnames}
+                    required
                     name="password"
                     id="password"
                     placeholder={i18next.t('password')}
                   />
-                  {formik.touched.password && formik.errors.password ? (
-                    <div className="text-danger">{formik.errors.password}</div>
-                  ) : null}
+                  <div className="text-danger">{formik.status}</div>
                 </div>
-                <div className="text-danger">{formik.status}</div>
-                <button type="submit" className="btn btn-primary w-25">{i18next.t('login')}</button>
+                <button type="submit" className="btn btn-outline-primary w-100">{i18next.t('login')}</button>
               </form>
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                <img className="rounded-circle" src="https://i.ibb.co/s3LZHBB/login.jpg" alt="Войти" />
+              </div>
             </div>
-            <div className="card-footer w-100">
+            <div className="card-footer w-100 p-4">
               <div className="text-center">
                 <span>{i18next.t('noAccount')}</span>
                 <Link to="/registration">{i18next.t('registration')}</Link>

@@ -27,7 +27,7 @@ const resources = {
       yourNick: 'Ваш ник',
       nickName: 'Имя пользователя',
       password: 'Пароль',
-      notCorrectNameOrPassword: 'Неверные имя или пароль',
+      notCorrectNameOrPassword: 'Неверные имя пользователя или пароль',
       passwordCornfirmation: 'Подтвердите пароль',
     },
   },
