@@ -7,7 +7,7 @@ import App from './App.jsx';
 import store from './slices/index.js';
 import resources from './resources/index.js';
 
-export default async () => {
+export default async (socket) => {
   await i18next.init({
     lng: 'ru',
     debug: true,
@@ -16,7 +16,7 @@ export default async () => {
 
   return (
     <Provider store={store}>
-      <App />
+      <App socket={socket} />
     </Provider>
   );
 };
