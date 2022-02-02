@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import i18next from 'i18next';
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ const Login = () => {
   const inputClassnames = cn('form-control', {
     'is-invalid': !inputValid,
   });
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +34,7 @@ const Login = () => {
         });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('username', response.data.username);
-        window.location.replace('/');
+        navigate('/', { replace: true });
         actions.resetForm({
           values: {
             // the type of `values` inferred to be Blog
