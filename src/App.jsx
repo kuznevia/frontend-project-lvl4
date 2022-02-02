@@ -21,7 +21,8 @@ import Chat from './components/Chat.jsx';
 import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
-import PrivateRoute from './components/PrivateRoute.jsx';
+import PrivateChatRoute from './components/PrivateChatRoute.jsx';
+import PrivateLoginRoute from './components/PrivateLoginRoute.jsx';
 import AuthContext from './AuthContext.js';
 
 const App = ({ socket }) => {
@@ -96,17 +97,23 @@ const App = ({ socket }) => {
         <div className="d-flex flex-column h-100">
           <Nav />
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/login"
+              element={
+                <PrivateLoginRoute>
+                  <Login />
+                </PrivateLoginRoute>
+            } />
             <Route
               path="/"
               element={
-                <PrivateRoute>
+                <PrivateChatRoute>
                   <Chat
                     sendMessage={sendMessage}
                     addChannel={addChannel}
                     removeChannel={removeChannel}
                     renameChannel={renameChannel} />
-                </PrivateRoute>
+                </PrivateChatRoute>
                 }
             />
             <Route path="*" element={<NotFound />} />
