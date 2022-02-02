@@ -70,6 +70,7 @@ const Registration = () => {
                       id="username"
                       placeholder={i18next.t('nickName')}
                     />
+                    <label htmlFor="username" hidden>{i18next.t('nickName')}</label>
                     {formik.touched.username && formik.errors.username ? (
                       <div className="text-danger">{formik.errors.username}</div>
                     ) : null}
@@ -85,6 +86,7 @@ const Registration = () => {
                       id="password"
                       placeholder={i18next.t('password')}
                     />
+                    <label htmlFor="password" hidden>{i18next.t('password')}</label>
                     {formik.touched.password && formik.errors.password ? (
                       <div className="text-danger">{formik.errors.password}</div>
                     ) : null}
@@ -100,6 +102,7 @@ const Registration = () => {
                       id="passwordConfirm"
                       placeholder={i18next.t('passwordCornfirmation')}
                     />
+                    <label htmlFor="passwordConfirm" hidden>{i18next.t('passwordCornfirmation')}</label>
                     {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
                       <div className="text-danger">{formik.errors.passwordConfirm}</div>
                     ) : null}
