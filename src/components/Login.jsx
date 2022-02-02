@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -62,11 +63,13 @@ const Login = () => {
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     className={inputClassnames}
+                    autoComplete="username"
                     required
                     name="username"
                     id="username"
                     placeholder={i18next.t('yourNick')}
                   />
+                  <label htmlFor="username" hidden>{i18next.t('yourNick')}</label>
                 </div>
                 <div className="form-floating mb-4 form-group">
                   <input
@@ -79,6 +82,7 @@ const Login = () => {
                     id="password"
                     placeholder={i18next.t('password')}
                   />
+                  <label htmlFor="password" hidden>{i18next.t('password')}</label>
                   <div className="text-danger">{formik.status}</div>
                 </div>
                 <button type="submit" className="btn btn-outline-primary w-100">{i18next.t('login')}</button>
