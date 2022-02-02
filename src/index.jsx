@@ -1,7 +1,6 @@
 // @ts-check
 import React from 'react';
 import i18next from 'i18next';
-import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './App.jsx';
@@ -15,10 +14,9 @@ export default async () => {
     resources,
   });
 
-  ReactDOM.render(
+  return (
     <Provider store={store}>
       <App />
-    </Provider>,
-    document.getElementById('chat'),
+    </Provider>
   );
 };
