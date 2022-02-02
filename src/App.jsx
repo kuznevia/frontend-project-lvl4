@@ -21,6 +21,7 @@ import Chat from './components/Chat.jsx';
 import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 import AuthContext from './AuthContext.js';
 
 const App = ({ socket }) => {
@@ -98,11 +99,15 @@ const App = ({ socket }) => {
             <Route path="/login" element={<Login />} />
             <Route
               path="/"
-              element={<Chat
-                sendMessage={sendMessage}
-                addChannel={addChannel}
-                removeChannel={removeChannel}
-                renameChannel={renameChannel} />}
+              element={
+                <PrivateRoute>
+                  <Chat
+                    sendMessage={sendMessage}
+                    addChannel={addChannel}
+                    removeChannel={removeChannel}
+                    renameChannel={renameChannel} />
+                </PrivateRoute>
+                }
             />
             <Route path="*" element={<NotFound />} />
             <Route path="/registration" element={<Registration />} />

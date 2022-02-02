@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import AuthContext from '../AuthContext';
 import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
@@ -13,12 +12,7 @@ const Chat = ({
   removeChannel,
   renameChannel,
 }) => {
-  const { authentificated } = useContext(AuthContext);
   const dispatch = useDispatch();
-
-  if (!authentificated) {
-    window.location.replace('/login');
-  }
 
   dispatch(setActiveUser(localStorage.getItem('username')));
 
