@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
 import AuthContext from '../AuthContext';
 
 const Registration = () => {
-  const { authentificated } = useContext(AuthContext);
+  const { authentificated, login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -32,9 +34,7 @@ const Registration = () => {
           username,
           password,
         });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
-        window.location.replace('/');
+        login(response.data);
         actions.resetForm({
           values: {
             // the type of `values` inferred to be Blog
@@ -52,7 +52,7 @@ const Registration = () => {
 
   return (
     <>
-      {authentificated && window.location.replace('/')}
+      {authentificated && navigate('/', { replace: true })}
       <div className="container-fluid h-100">
         <div className="row justify-content-center align-content-center h-100">
           <div className="col-12 col-md-8 col-xxl-6">

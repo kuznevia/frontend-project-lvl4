@@ -30,8 +30,15 @@ const App = ({ socket }) => {
   const dispatch = useDispatch();
 
   const logout = () => {
+    localStorage.removeItem('username');
     localStorage.removeItem('token');
     setAuthentificated(false);
+  };
+
+  const login = (data) => {
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', data.username);
+    setAuthentificated(true);
   };
 
   socket.on('connect', () => {
@@ -91,7 +98,7 @@ const App = ({ socket }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authentificated, logout }}>
+    <AuthContext.Provider value={{ authentificated, logout, login }}>
       <Router>
         <div className="d-flex flex-column h-100">
           <Nav />
