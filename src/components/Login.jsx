@@ -95,7 +95,7 @@ const Login = () => {
             <div className="card-footer w-100 p-4">
               <div className="text-center">
                 <span>{i18next.t('noAccount')}</span>
-                <Link to="/registration">{i18next.t('registration')}</Link>
+                <Link to="/signup">{i18next.t('registration')}</Link>
               </div>
             </div>
           </div>

@@ -110,7 +110,7 @@ const App = ({ socket }) => {
                 }
             />
             <Route path="*" element={<NotFound />} />
-            <Route path="/registration" element={<Registration />} />
+            <Route path="/signup" element={<Registration />} />
           </Routes>
         </div>
         <ToastContainer
