@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
 const Messages = ({ sendMessage }) => {
-  const [text, setText] = useState('');
+  const [inputText, setinputText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -17,21 +17,21 @@ const Messages = ({ sendMessage }) => {
   }, []);
 
   const handleInputChange = (e) => {
-    setText(e.target.value);
+    setinputText(e.target.value);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (text === '') {
+    if (inputText === '') {
       console.log('empty');
       return;
     }
     sendMessage({
-      message: filter.clean(text),
+      text: filter.clean(inputText),
       user: activeUser,
       channelId: activeChannelId,
     });
-    setText('');
+    setinputText('');
   };
 
   const renderMessages = () => {
@@ -45,14 +45,14 @@ const Messages = ({ sendMessage }) => {
     return (
       <div>
         {filteredMessages
-          .map((el) => (
-            <div key={el.id}>
+          .map(({ user, text, id }) => (
+            <div key={id}>
               <span className="font-weight-bold">
-                {el.user}
+                {user}
                 :
                 {' '}
               </span>
-              {el.message}
+              {text}
             </div>
           ))}
       </div>
@@ -86,7 +86,7 @@ const Messages = ({ sendMessage }) => {
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleFormSubmit}>
-            <input value={text} aria-label="Новое сообщение" onChange={handleInputChange} />
+            <input value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} />
             <button type="submit" className="btn btn-outline-primary">{i18next.t('send')}</button>
           </form>
         </div>

@@ -65,9 +65,9 @@ const App = ({ socket }) => {
     dispatch(channelRename(id, name));
   });
 
-  const sendMessage = ({ message, user, channelId }) => {
+  const sendMessage = ({ text, user, channelId }) => {
     if (socket.connected) {
-      socket.emit('newMessage', { message, user, channelId });
+      socket.emit('newMessage', { text, user, channelId });
     } else {
       console.log('no connection');
     }
