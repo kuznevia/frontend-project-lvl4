@@ -86,7 +86,7 @@ const Messages = ({ sendMessage }) => {
         </div>
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleFormSubmit}>
-            <input value={text} onChange={handleInputChange} />
+            <input value={text} aria-label="Новое сообщение" onChange={handleInputChange} />
           </form>
         </div>
       </div>
