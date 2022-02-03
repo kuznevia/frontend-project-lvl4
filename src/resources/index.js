@@ -29,6 +29,9 @@ const resources = {
       password: 'Пароль',
       notCorrectNameOrPassword: 'Неверные имя пользователя или пароль',
       passwordCornfirmation: 'Подтвердите пароль',
+      numberOfSymbols: 'От 3 до 20 символов',
+      passwordsShouldBeEqual: 'Пароли должны совпадать',
+      minimumNumberOfSymbols: 'Не менее 6 символов',
     },
   },
 };

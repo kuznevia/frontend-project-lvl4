@@ -7,7 +7,7 @@ import axios from 'axios';
 import AuthContext from '../AuthContext';
 
 const Registration = () => {
-  const { authentificated, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -20,13 +20,13 @@ const Registration = () => {
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required')
-        .min(3, 'Не менее 3 символов')
-        .max(20, 'Не более 20 символов'),
+        .min(3, `${i18next.t('numberOfSymbols')}`)
+        .max(20, `${i18next.t('numberOfSymbols')}`),
       password: Yup.string()
         .required('Required')
-        .min(6, 'Минимум 6 симолов'),
+        .min(6, `${i18next.t('minimumNumberOfSymbols')}`),
       passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Пароли не совпадают'),
+        .oneOf([Yup.ref('password'), null], `${i18next.t('passwordsShouldBeEqual')}`),
     }),
     onSubmit: async ({ username, password }, actions) => {
       try {
@@ -35,7 +35,7 @@ const Registration = () => {
           password,
         });
         login(response.data);
-        window.location.replace('/');
+        navigate('/', { replace: true });
         actions.resetForm({
           values: {
             // the type of `values` inferred to be Blog

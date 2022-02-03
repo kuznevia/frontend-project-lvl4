@@ -13,7 +13,7 @@ const Login = () => {
   const inputClassnames = cn('form-control', {
     'is-invalid': !inputValid,
   });
-  const { authentificated, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -35,7 +35,7 @@ const Login = () => {
           password,
         });
         login(response.data);
-        window.location.replace('/');
+        navigate('/', { replace: true });
         actions.resetForm({
           values: {
             // the type of `values` inferred to be Blog
