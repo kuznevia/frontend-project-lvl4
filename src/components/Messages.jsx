@@ -87,6 +87,7 @@ const Messages = ({ sendMessage }) => {
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleFormSubmit}>
             <input value={text} aria-label="Новое сообщение" onChange={handleInputChange} />
+            <button type="submit" className="btn btn-outline-primary">{i18next.t('send')}</button>
           </form>
         </div>
       </div>
