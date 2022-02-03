@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import i18next from 'i18next';
 import * as Yup from 'yup';
@@ -14,7 +14,6 @@ const Login = () => {
     'is-invalid': !inputValid,
   });
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -35,15 +34,6 @@ const Login = () => {
           password,
         });
         login(response.data);
-        navigate('/', { replace: true });
-        actions.resetForm({
-          values: {
-            // the type of `values` inferred to be Blog
-            username: '',
-            password: '',
-          },
-          // you can also set the other form states here
-        });
       } catch (e) {
         console.log(e);
         actions.setStatus(i18next.t('notCorrectNameOrPassword'));

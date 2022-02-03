@@ -106,7 +106,7 @@ const App = ({ socket }) => {
             <Route
               path="/"
               element={
-                <PrivateRoute>
+                <PrivateRoute value="chat">
                   <Chat
                     sendMessage={sendMessage}
                     addChannel={addChannel}
@@ -115,8 +115,22 @@ const App = ({ socket }) => {
                 </PrivateRoute>
                 }
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Registration />} />
+            <Route
+              path="/login"
+              element={
+                <PrivateRoute value="loginAndSignUp">
+                  <Login />
+                </PrivateRoute>
+                }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PrivateRoute value="loginAndSignUp">
+                  <Registration />
+                </PrivateRoute>
+                }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import i18next from 'i18next';
 import axios from 'axios';
@@ -8,7 +7,6 @@ import AuthContext from '../AuthContext';
 
 const Registration = () => {
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -35,15 +33,6 @@ const Registration = () => {
           password,
         });
         login(response.data);
-        navigate('/', { replace: true });
-        actions.resetForm({
-          values: {
-            // the type of `values` inferred to be Blog
-            username: '',
-            password: '',
-          },
-          // you can also set the other form states here
-        });
       } catch (e) {
         console.log(e);
         actions.setStatus('Такой пользователь уже существует');

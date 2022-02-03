@@ -8,7 +8,6 @@ const Messages = ({ sendMessage }) => {
   const messages = useSelector((state) => state.messages.messages);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
-  console.log(messages);
 
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
 
