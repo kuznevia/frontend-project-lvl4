@@ -103,7 +103,6 @@ const App = ({ socket }) => {
         <div className="d-flex flex-column h-100">
           <Nav />
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route
               path="/"
               element={
@@ -116,8 +115,9 @@ const App = ({ socket }) => {
                 </PrivateRoute>
                 }
             />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Registration />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <ToastContainer
