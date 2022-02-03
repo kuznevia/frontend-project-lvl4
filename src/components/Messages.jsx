@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 
 const Messages = ({ sendMessage }) => {
-  const [inputText, setinputText] = useState('');
+  const [inputText, setInputText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -16,7 +16,7 @@ const Messages = ({ sendMessage }) => {
   }, []);
 
   const handleInputChange = (e) => {
-    setinputText(e.target.value);
+    setInputText(e.target.value);
   };
 
   const handleFormSubmit = (e) => {
@@ -30,7 +30,7 @@ const Messages = ({ sendMessage }) => {
       user: activeUser,
       channelId: activeChannelId,
     });
-    setinputText('');
+    setInputText('');
   };
 
   const renderMessages = () => {
@@ -57,6 +57,10 @@ const Messages = ({ sendMessage }) => {
       </div>
     );
   };
+
+  useEffect(() => {
+    renderMessages();
+  }, []);
 
   const activeChannelName = () => {
     const [activeChannel] = useSelector((state) => state.channels.channels
