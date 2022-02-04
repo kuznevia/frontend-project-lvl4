@@ -13,7 +13,6 @@ const Messages = ({ sendMessage }) => {
 
   useEffect(() => {
     filter.loadDictionary('en');
-    filter.loadDictionary('ru');
   }, []);
 
   const handleInputChange = (e) => {

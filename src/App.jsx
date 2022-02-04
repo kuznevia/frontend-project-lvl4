@@ -26,7 +26,6 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 
 const App = ({ socket }) => {
   const dispatch = useDispatch();
-  console.log('hellow world');
 
   socket.on('connect', () => {
     console.log(socket.id);
