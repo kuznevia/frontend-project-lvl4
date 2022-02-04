@@ -32,10 +32,10 @@ const ModalVindowAdd = ({ addChannel }) => {
       setAlert('Channel name has to be unique');
       return;
     }
+    toast.success(i18next.t('channelAdded'));
     addChannel({ name: text });
     setText('');
     setShow(false);
-    toast.success(i18next.t('channelAdded'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
