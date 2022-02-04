@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/jsx-closing-bracket-location */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,6 +9,7 @@ import {
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
+import AuthProvider from './components/AuthProvider.jsx';
 import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
 import {
   addNewChannel,
@@ -22,24 +23,10 @@ import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
-import AuthContext from './AuthContext.js';
 
 const App = ({ socket }) => {
-  const authToken = localStorage.getItem('token');
-  const [authentificated, setAuthentificated] = useState(!!authToken);
   const dispatch = useDispatch();
-
-  const logout = () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    setAuthentificated(false);
-  };
-
-  const login = (data) => {
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('username', data.username);
-    setAuthentificated(true);
-  };
+  console.log('hellow world');
 
   socket.on('connect', () => {
     console.log(socket.id);
@@ -98,7 +85,7 @@ const App = ({ socket }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authentificated, logout, login }}>
+    <AuthProvider>
       <Router>
         <div className="d-flex flex-column h-100">
           <Nav />
@@ -146,7 +133,7 @@ const App = ({ socket }) => {
           pauseOnHover
         />
       </Router>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 };
 
