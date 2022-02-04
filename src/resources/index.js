@@ -21,7 +21,7 @@ const resources = {
       fourzerofour: '404 - Страница не найдена',
       home: 'Перейти на стартовую страницу',
       registr: 'Зарегистрироваться',
-      channelAdded: 'Канал добавлен',
+      channelAdded: 'Канал создан',
       channelRemoved: 'Канал удален',
       channelRenamed: 'Канал переименован',
       yourNick: 'Ваш ник',
