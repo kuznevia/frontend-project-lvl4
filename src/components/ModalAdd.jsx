@@ -22,7 +22,8 @@ const ModalVindowAdd = ({ addChannel }) => {
 
   const handleShow = () => setShow(true);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
       return;
@@ -38,7 +39,7 @@ const ModalVindowAdd = ({ addChannel }) => {
     toast.success(i18next.t('channelAdded'));
   };
 
-  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
+  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', {
     'border-primary': !alert,
     'border-danger': alert,
   });
@@ -53,18 +54,20 @@ const ModalVindowAdd = ({ addChannel }) => {
           <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="name" id="name" className={inputClassNames} value={text} onChange={handleInputChange} />
-          <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
-          {alert && <span className="text-danger">{alert}</span>}
+          <form onSubmit={handleAdd} className="form-group">
+            <input name="name" id="name" className={inputClassNames} value={text} onChange={handleInputChange} />
+            <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
+            {alert && <span className="text-danger">{alert}</span>}
+            <div className="d-flex justify-content-end">
+              <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
+                {i18next.t('cancel')}
+              </Button>
+              <Button type="submit" variant="primary">
+                {i18next.t('add')}
+              </Button>
+            </div>
+          </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button type="button" variant="secondary" onClick={handleClose}>
-            {i18next.t('cancel')}
-          </Button>
-          <Button type="submit" variant="primary" onClick={handleAdd}>
-            {i18next.t('add')}
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
