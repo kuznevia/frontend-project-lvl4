@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import i18next from 'i18next';
+import { ToastContainer, toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
-import { toast } from 'react-toastify';
 
 const ModalVindowAdd = ({ addChannel }) => {
   const [show, setShow] = useState(false);
@@ -34,9 +34,9 @@ const ModalVindowAdd = ({ addChannel }) => {
       return;
     }
     addChannel({ name: text });
+    toast.success(i18next.t('channelAdded'));
     setText('');
     setShow(false);
-    toast.success(i18next.t('channelAdded'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', {
@@ -69,6 +69,17 @@ const ModalVindowAdd = ({ addChannel }) => {
           </form>
         </Modal.Body>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 };

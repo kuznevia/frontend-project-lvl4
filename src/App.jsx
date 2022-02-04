@@ -6,7 +6,6 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import AuthProvider from './components/AuthProvider.jsx';
@@ -120,17 +119,6 @@ const App = ({ socket }) => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
       </Router>
     </AuthProvider>
   );
