@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ const ModalVindowAdd = ({ addChannel }) => {
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
+  const inputRef = useRef(null);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -18,6 +19,11 @@ const ModalVindowAdd = ({ addChannel }) => {
   const handleClose = () => {
     setShow(false);
     setAlert(false);
+    setText('');
+  };
+
+  const onEntered = () => {
+    inputRef.current.focus();
   };
 
   const handleShow = () => setShow(true);
@@ -49,13 +55,20 @@ const ModalVindowAdd = ({ addChannel }) => {
       <button type="button" className="btn btn-link border border-primary m-0 p-0 px-1" onClick={handleShow}>
         +
       </button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} onEntered={onEntered}>
         <Modal.Header>
           <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleAdd} className="form-group">
-            <input name="name" id="name" className={inputClassNames} value={text} onChange={handleInputChange} />
+            <input
+              name="name"
+              id="name"
+              className={inputClassNames}
+              value={text}
+              onChange={handleInputChange}
+              ref={inputRef}
+            />
             <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
             {alert && <span className="text-danger">{alert}</span>}
             <div className="d-flex justify-content-end">
