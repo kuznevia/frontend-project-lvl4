@@ -32,10 +32,10 @@ const ModalVindowAdd = ({ addChannel }) => {
       setAlert('Channel name has to be unique');
       return;
     }
-    toast.success(i18next.t('channelAdded'));
     addChannel({ name: text });
     setText('');
     setShow(false);
+    toast.success(i18next.t('channelAdded'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
@@ -58,10 +58,10 @@ const ModalVindowAdd = ({ addChannel }) => {
           {alert && <span className="text-danger">{alert}</span>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button type="button" variant="secondary" onClick={handleClose}>
             {i18next.t('cancel')}
           </Button>
-          <Button variant="primary" onClick={handleAdd}>
+          <Button type="submit" variant="primary" onClick={handleAdd}>
             {i18next.t('add')}
           </Button>
         </Modal.Footer>
