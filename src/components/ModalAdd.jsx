@@ -53,7 +53,8 @@ const ModalVindowAdd = ({ addChannel }) => {
           <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input className={inputClassNames} value={text} onChange={handleInputChange} />
+          <input name="name" id="name" className={inputClassNames} value={text} onChange={handleInputChange} />
+          <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
           {alert && <span className="text-danger">{alert}</span>}
         </Modal.Body>
         <Modal.Footer>

@@ -26,6 +26,7 @@ const resources = {
       channelRenamed: 'Канал переименован',
       yourNick: 'Ваш ник',
       nickName: 'Имя пользователя',
+      channelName: 'Имя канала',
       password: 'Пароль',
       notCorrectNameOrPassword: 'Неверные имя пользователя или пароль',
       passwordCornfirmation: 'Подтвердите пароль',
