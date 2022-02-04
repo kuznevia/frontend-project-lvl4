@@ -12,7 +12,7 @@ const Messages = ({ sendMessage }) => {
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
 
   useEffect(() => {
-    filter.loadDictionary('ru');
+    filter.loadDictionary();
   }, []);
 
   const handleInputChange = (e) => {
