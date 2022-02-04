@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import AuthProvider from './components/AuthProvider.jsx';
 import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
 import {
@@ -119,6 +120,17 @@ const App = ({ socket }) => {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+      />
       </Router>
     </AuthProvider>
   );

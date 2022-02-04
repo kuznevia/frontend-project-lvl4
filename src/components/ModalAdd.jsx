@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import i18next from 'i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
@@ -33,8 +33,8 @@ const ModalVindowAdd = ({ addChannel }) => {
       setAlert('Channel name has to be unique');
       return;
     }
-    addChannel({ name: text });
     toast.success(i18next.t('channelAdded'));
+    addChannel({ name: text });
     setText('');
     setShow(false);
   };
@@ -69,17 +69,6 @@ const ModalVindowAdd = ({ addChannel }) => {
           </form>
         </Modal.Body>
       </Modal>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </>
   );
 };
