@@ -29,7 +29,6 @@ const ModalVindowAdd = ({ addChannel }) => {
   const handleShow = () => setShow(true);
 
   const handleAdd = () => {
-    toast.success('Канал создан');
     if (text === '') {
       setAlert('Name cant be empty');
       return;
@@ -40,6 +39,7 @@ const ModalVindowAdd = ({ addChannel }) => {
       return;
     }
     addChannel({ name: text });
+    toast.success(i18next.t('channelAdded'));
     setText('');
     setShow(false);
   };
@@ -52,7 +52,7 @@ const ModalVindowAdd = ({ addChannel }) => {
   return (
     <>
       <button type="button" className="btn btn-link border border-primary m-0 p-0 px-1" onClick={handleShow}>
-        +
+        check
       </button>
       <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
         <Modal.Header>
