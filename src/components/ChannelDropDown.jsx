@@ -76,7 +76,7 @@ const ChannelDropDown = ({
       <Button onClick={setCurrent} variant={activeClasses}>{itemName}</Button>
 
       <Dropdown.Toggle role="button" split variant={activeClasses} id="dropdown-split-basic">
-        <span hidden>{i18next.t('manageChannel')}</span>
+        <span>{i18next.t('manageChannel')}</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
