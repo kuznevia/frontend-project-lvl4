@@ -55,7 +55,8 @@ const ChannelDropDown = ({
     toast.success(i18next.t('channelRemoved'));
   };
 
-  const handleRename = () => {
+  const handleRename = (e) => {
+    e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
       return;
@@ -125,7 +126,7 @@ const ChannelDropDown = ({
                 {i18next.t('cancel')}
               </Button>
               <Button type="submit" variant="primary">
-                {i18next.t('rename')}
+                {i18next.t('send')}
               </Button>
             </div>
           </form>
