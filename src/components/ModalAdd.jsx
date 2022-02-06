@@ -76,7 +76,7 @@ const ModalVindowAdd = ({ addChannel }) => {
                 {i18next.t('cancel')}
               </Button>
               <Button type="submit" variant="primary">
-                {i18next.t('add')}
+                {i18next.t('send')}
               </Button>
             </div>
           </form>
