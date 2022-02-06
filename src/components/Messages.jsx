@@ -6,6 +6,7 @@ import filter from 'leo-profanity';
 const Messages = ({ sendMessage }) => {
   const [inputText, setInputText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
+  const channels = useSelector((state) => state.channels.channels);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
 
@@ -58,13 +59,8 @@ const Messages = ({ sendMessage }) => {
     );
   };
 
-  useEffect(() => {
-    renderMessages();
-  }, []);
-
   const activeChannelName = () => {
-    const [activeChannel] = useSelector((state) => state.channels.channels
-      .filter((channel) => channel.id === activeChannelId));
+    const [activeChannel] = channels.filter((channel) => channel.id === activeChannelId);
     if (activeChannel === undefined) {
       return null;
     }

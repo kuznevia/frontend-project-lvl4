@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
@@ -41,16 +41,18 @@ const Chat = ({
     }
   };
 
-  useEffect(() => {
-    initialRequest();
-  }, []);
+  initialRequest();
 
   return (
     <>
       <div className="container-xxl shadow mx-5 h-100">
         <div className="row h-100 g-0">
           <div className="col-md-2">
-            <Channels addChannel={addChannel} removeChannel={removeChannel} renameChannel={renameChannel} />
+            <Channels
+              addChannel={addChannel}
+              removeChannel={removeChannel}
+              renameChannel={renameChannel}
+            />
           </div>
           <div className="col-md-10">
             <Messages sendMessage={sendMessage} />

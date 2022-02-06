@@ -31,7 +31,8 @@ const Channels = ({ addChannel, removeChannel, renameChannel }) => {
               setCurrent={setCurrent}
               removeChannel={removeChannel}
               renameChannel={renameChannel}
-              activeClasses={activeChannelId === item.id ? activeChannelClassnames : channelsClassNames}
+              activeClasses={activeChannelId === item.id
+                ? activeChannelClassnames : channelsClassNames}
               key={item.id}
               id={item.id}
               itemName={item.name}

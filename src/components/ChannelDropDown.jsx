@@ -19,16 +19,20 @@ const ChannelDropDown = ({
   itemName,
   removable,
 }) => {
-  if (!removable) {
-    return <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>{itemName}</Button>;
-  }
-
   const [showRemove, setShowRemove] = useState(false);
   const [showRename, setShowRename] = useState(false);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
+
+  if (!removable) {
+    return (
+      <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>
+        {itemName}
+      </Button>
+    );
+  }
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -105,7 +109,12 @@ const ChannelDropDown = ({
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal onSubmit={handleRename} show={showRename} onHide={handleCloseRename} onEntered={onEntered}>
+      <Modal
+        onSubmit={handleRename}
+        show={showRename}
+        onHide={handleCloseRename}
+        onEntered={onEntered}
+      >
         <Modal.Header>
           <Modal.Title>{i18next.t('setNewChannelName')}</Modal.Title>
         </Modal.Header>
