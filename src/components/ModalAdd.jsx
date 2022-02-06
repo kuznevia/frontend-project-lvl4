@@ -70,6 +70,7 @@ const ModalVindowAdd = ({ addChannel }) => {
               ref={inputRef}
             />
             <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
+            <div>{i18next.t('channelAdded')}</div>
             {alert && <span className="text-danger">{alert}</span>}
             <div className="d-flex justify-content-end">
               <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
