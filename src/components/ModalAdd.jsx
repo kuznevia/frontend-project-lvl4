@@ -28,7 +28,8 @@ const ModalVindowAdd = ({ addChannel }) => {
 
   const handleShow = () => setShow(true);
 
-  const handleAdd = () => {
+  const handleAdd = (e) => {
+    e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
       return;
@@ -44,7 +45,7 @@ const ModalVindowAdd = ({ addChannel }) => {
     setShow(false);
   };
 
-  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', {
+  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
     'border-primary': !alert,
     'border-danger': alert,
   });
@@ -52,7 +53,7 @@ const ModalVindowAdd = ({ addChannel }) => {
   return (
     <>
       <button type="button" className="btn btn-link border border-primary m-0 p-0 px-1" onClick={handleShow}>
-        check
+        +
       </button>
       <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
         <Modal.Header>
