@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Dropdown,
   Button,
@@ -28,6 +28,7 @@ const ChannelDropDown = ({
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
+  const inputRef = useRef(null);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -43,6 +44,10 @@ const ChannelDropDown = ({
 
   const handleCloseRename = () => {
     setShowRename(false);
+  };
+
+  const onEntered = () => {
+    inputRef.current.focus();
   };
 
   const handleDelete = () => {
@@ -76,7 +81,7 @@ const ChannelDropDown = ({
       <Button onClick={setCurrent} variant={activeClasses}>{itemName}</Button>
 
       <Dropdown.Toggle role="button" split variant={activeClasses} id="dropdown-split-basic">
-        <span>{i18next.t('manageChannel')}</span>
+        <span className="d-none">{i18next.t('manageChannel')}</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -99,22 +104,32 @@ const ChannelDropDown = ({
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showRename} onHide={handleCloseRename}>
+      <Modal onSubmit={handleRename} show={showRename} onHide={handleCloseRename} onEntered={onEntered}>
         <Modal.Header>
           <Modal.Title>{i18next.t('setNewChannelName')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input className={inputClassNames} value={text} onChange={handleInputChange} />
-          {alert && <span className="text-danger">{alert}</span>}
+          <form className="form-group">
+            <input
+              name="name"
+              id="name"
+              className={inputClassNames}
+              value={text}
+              onChange={handleInputChange}
+              ref={inputRef}
+            />
+            <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
+            {alert && <span className="text-danger">{alert}</span>}
+            <div className="d-flex justify-content-end mt-1">
+              <Button className="mr-2" type="button" variant="secondary" onClick={handleCloseRename}>
+                {i18next.t('cancel')}
+              </Button>
+              <Button type="submit" variant="primary">
+                {i18next.t('rename')}
+              </Button>
+            </div>
+          </form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseRename}>
-            {i18next.t('cancel')}
-          </Button>
-          <Button variant="primary" onClick={handleRename}>
-            {i18next.t('rename')}
-          </Button>
-        </Modal.Footer>
       </Modal>
     </Dropdown>
   );
