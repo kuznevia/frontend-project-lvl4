@@ -35,6 +35,7 @@ const resources = {
       passwordsShouldBeEqual: 'Пароли должны совпадать',
       minimumNumberOfSymbols: 'Не менее 6 символов',
       manageChannel: 'Управление каналом',
+      connectionFailed: 'Ошибка соединения',
     },
   },
 };

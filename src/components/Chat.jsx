@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
+import { toast } from 'react-toastify';
 import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
@@ -34,6 +36,7 @@ const Chat = ({
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
+      toast.error(i18next.t('connectionFailed'));
       console.log(e);
     }
   };
