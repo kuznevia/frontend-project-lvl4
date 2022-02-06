@@ -23,7 +23,7 @@ const resources = {
       home: 'Перейти на стартовую страницу',
       registr: 'Зарегистрироваться',
       channelAdded: 'Канал создан',
-      channelRemoved: 'Канал удален',
+      channelRemoved: 'Канал удалён',
       channelRenamed: 'Канал переименован',
       yourNick: 'Ваш ник',
       nickName: 'Имя пользователя',
