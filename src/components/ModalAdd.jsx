@@ -62,14 +62,14 @@ const ModalVindowAdd = ({ addChannel }) => {
         <Modal.Body>
           <form className="form-group">
             <input
-              name="channelName"
-              id="channelName"
+              name="name"
+              id="name"
               className={inputClassNames}
               value={text}
               onChange={handleInputChange}
               ref={inputRef}
             />
-            <label htmlFor="channelName" hidden>{i18next.t('channelName')}</label>
+            <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
             {alert && <span className="text-danger">{alert}</span>}
             <div className="d-flex justify-content-end">
               <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>

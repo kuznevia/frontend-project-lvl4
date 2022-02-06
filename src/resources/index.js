@@ -34,7 +34,7 @@ const resources = {
       numberOfSymbols: 'От 3 до 20 символов',
       passwordsShouldBeEqual: 'Пароли должны совпадать',
       minimumNumberOfSymbols: 'Не менее 6 символов',
-      send: 'Отправить',
+      manageChannel: 'Управление каналом',
     },
   },
 };
