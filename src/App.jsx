@@ -38,7 +38,7 @@ const App = ({ socket }) => {
   socket.on('newChannel', (channel) => {
     const { id } = channel;
     dispatch(addNewChannel({ channel }));
-    dispatch(setCurrentChannel({ id }));
+    dispatch(setCurrentChannel(id));
   });
 
   socket.on('removeChannel', (id) => {
