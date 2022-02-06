@@ -28,8 +28,8 @@ const ModalVindowAdd = ({ addChannel }) => {
 
   const handleShow = () => setShow(true);
 
-  const handleAdd = (e) => {
-    e.preventDefault();
+  const handleAdd = () => {
+    toast.success('Канал создан');
     if (text === '') {
       setAlert('Name cant be empty');
       return;
@@ -39,7 +39,6 @@ const ModalVindowAdd = ({ addChannel }) => {
       setAlert('Channel name has to be unique');
       return;
     }
-    toast.success(i18next.t('channelAdded'));
     addChannel({ name: text });
     setText('');
     setShow(false);
