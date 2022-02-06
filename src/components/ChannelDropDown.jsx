@@ -98,10 +98,10 @@ const ChannelDropDown = ({
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRemove}>
-            {i18next.t('no')}
+            {i18next.t('cancel')}
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            {i18next.t('yes')}
+            {i18next.t('delete')}
           </Button>
         </Modal.Footer>
       </Modal>

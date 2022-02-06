@@ -11,7 +11,7 @@ const resources = {
       yes: 'Да',
       no: 'Нет',
       setNewChannelName: 'Задайте новое имя каналу',
-      cancel: 'Отмена',
+      cancel: 'Отменить',
       channels: 'Каналы',
       noAccount: 'Нет аккаунта? ',
       registration: 'Регистрация',
