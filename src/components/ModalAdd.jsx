@@ -55,12 +55,12 @@ const ModalVindowAdd = ({ addChannel }) => {
       <button type="button" className="btn btn-link border border-primary m-0 p-0 px-1" onClick={handleShow}>
         +
       </button>
-      <Modal show={show} onHide={handleClose} onEntered={onEntered}>
+      <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
         <Modal.Header>
           <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleAdd} className="form-group">
+          <form className="form-group">
             <input
               name="name"
               id="name"
