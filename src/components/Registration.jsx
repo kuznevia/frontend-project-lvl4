@@ -1,13 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
+import cn from 'classnames';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
 
 const Registration = () => {
   const { login } = useContext(AuthContext);
   const { t } = useTranslation();
+  const rollbar = useRollbar();
+  const [inputValid, setInputValid] = useState(true);
+  const inputClassnames = cn('form-control', {
+    'is-invalid': !inputValid,
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +43,9 @@ const Registration = () => {
         login(response.data);
       } catch (e) {
         console.log(e);
-        actions.setStatus('Такой пользователь уже существует');
+        rollbar.warning(t('userExists'));
+        actions.setStatus(t('userExists'));
+        setInputValid(false);
       }
     },
   });
@@ -53,7 +62,7 @@ const Registration = () => {
                   <input
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    className="form-control"
+                    className={inputClassnames}
                     required
                     name="username"
                     id="username"
@@ -69,7 +78,7 @@ const Registration = () => {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     type="password"
-                    className="form-control"
+                    className={inputClassnames}
                     required
                     name="password"
                     id="password"
@@ -85,7 +94,7 @@ const Registration = () => {
                     onChange={formik.handleChange}
                     value={formik.values.passwordConfirm}
                     type="password"
-                    className="form-control"
+                    className={inputClassnames}
                     required
                     name="passwordConfirm"
                     id="passwordConfirm"
