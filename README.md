@@ -1,6 +1,6 @@
 # Mini Slack App
 
-[![Github Actions Status](https://github.com/hexlet-components/projects-frontend-l4-server/workflows/Node%20CI/badge.svg)](https://github.com/hexlet-components/projects-frontend-l4-server/actions)
+[![Github Actions Status](https://github.com/kuznevia/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/kuznevia/projects-frontend-l4-server/actions)
 
 ## Description
 This is a chat application with channels support.

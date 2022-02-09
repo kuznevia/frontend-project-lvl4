@@ -1,16 +1,19 @@
-import React, { useState, useRef } from 'react';
-import i18next from 'i18next';
+import React, { useState, useRef, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
+import { ChatContext } from '../contexts/ChatProvider.jsx';
 
-const ModalVindowAdd = ({ addChannel }) => {
+const ModalVindowAdd = () => {
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
+  const { t } = useTranslation();
+  const { addChannel } = useContext(ChatContext);
 
   const handleInputChange = (e) => {
     setText(e.target.value);
@@ -40,7 +43,7 @@ const ModalVindowAdd = ({ addChannel }) => {
       return;
     }
     addChannel({ name: text });
-    toast.success(i18next.t('channelAdded'));
+    toast.success(t('channelAdded'));
     setText('');
     setShow(false);
   };
@@ -57,7 +60,7 @@ const ModalVindowAdd = ({ addChannel }) => {
       </button>
       <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
         <Modal.Header>
-          <Modal.Title>{i18next.t('addNewChannel')}</Modal.Title>
+          <Modal.Title>{t('addNewChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-group">
@@ -69,14 +72,14 @@ const ModalVindowAdd = ({ addChannel }) => {
               onChange={handleInputChange}
               ref={inputRef}
             />
-            <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
+            <label htmlFor="name" hidden>{t('channelName')}</label>
             {alert && <span className="text-danger">{alert}</span>}
             <div className="d-flex justify-content-end">
               <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
-                {i18next.t('cancel')}
+                {t('cancel')}
               </Button>
               <Button type="submit" variant="primary">
-                {i18next.t('send')}
+                {t('send')}
               </Button>
             </div>
           </form>

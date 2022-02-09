@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import {
   Dropdown,
   Button,
@@ -6,14 +6,13 @@ import {
   Modal,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import cn from 'classnames';
+import { ChatContext } from '../contexts/ChatProvider.jsx';
 
 const ChannelDropDown = ({
   setCurrent,
-  removeChannel,
-  renameChannel,
   activeClasses,
   id,
   itemName,
@@ -25,6 +24,8 @@ const ChannelDropDown = ({
   const [alert, setAlert] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
+  const { t } = useTranslation();
+  const { removeChannel, renameChannel } = useContext(ChatContext);
 
   if (!removable) {
     return (
@@ -56,7 +57,7 @@ const ChannelDropDown = ({
 
   const handleDelete = () => {
     removeChannel({ id });
-    toast.success(i18next.t('channelRemoved'));
+    toast.success(t('channelRemoved'));
   };
 
   const handleRename = (e) => {
@@ -73,7 +74,7 @@ const ChannelDropDown = ({
     renameChannel({ name: text, id });
     setText('');
     setShowRename(false);
-    toast.success(i18next.t('channelRenamed'));
+    toast.success(t('channelRenamed'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
@@ -86,26 +87,26 @@ const ChannelDropDown = ({
       <Button onClick={setCurrent} variant={activeClasses}>{itemName}</Button>
 
       <Dropdown.Toggle role="button" split variant={activeClasses} id="dropdown-split-basic">
-        <span className="d-none">{i18next.t('manageChannel')}</span>
+        <span className="d-none">{t('manageChannel')}</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleShowRemove}>{i18next.t('delete')}</Dropdown.Item>
-        <Dropdown.Item onClick={handleShowRename}>{i18next.t('rename')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRemove}>{t('delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleShowRename}>{t('rename')}</Dropdown.Item>
       </Dropdown.Menu>
       <Modal show={showRemove} onHide={handleCloseRemove}>
         <Modal.Header>
-          <Modal.Title>{i18next.t('deleteСhannel')}</Modal.Title>
+          <Modal.Title>{t('deleteСhannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {i18next.t('youSure')}
+          {t('youSure')}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseRemove}>
-            {i18next.t('cancel')}
+            {t('cancel')}
           </Button>
           <Button variant="danger" onClick={handleDelete}>
-            {i18next.t('delete')}
+            {t('delete')}
           </Button>
         </Modal.Footer>
       </Modal>
@@ -116,7 +117,7 @@ const ChannelDropDown = ({
         onEntered={onEntered}
       >
         <Modal.Header>
-          <Modal.Title>{i18next.t('setNewChannelName')}</Modal.Title>
+          <Modal.Title>{t('setNewChannelName')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-group">
@@ -128,14 +129,14 @@ const ChannelDropDown = ({
               onChange={handleInputChange}
               ref={inputRef}
             />
-            <label htmlFor="name" hidden>{i18next.t('channelName')}</label>
+            <label htmlFor="name" hidden>{t('channelName')}</label>
             {alert && <span className="text-danger">{alert}</span>}
             <div className="d-flex justify-content-end mt-1">
               <Button className="mr-2" type="button" variant="secondary" onClick={handleCloseRename}>
-                {i18next.t('cancel')}
+                {t('cancel')}
               </Button>
               <Button type="submit" variant="primary">
-                {i18next.t('send')}
+                {t('send')}
               </Button>
             </div>
           </form>

@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import i18next from 'i18next';
+import React, { useState, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
+import { ChatContext } from '../contexts/ChatProvider.jsx';
 
-const Messages = ({ sendMessage }) => {
+const Messages = () => {
   const [inputText, setInputText] = useState('');
   const messages = useSelector((state) => state.messages.messages);
   const channels = useSelector((state) => state.channels.channels);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
+  const { sendMessage } = useContext(ChatContext);
+  const { t } = useTranslation();
 
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
 
@@ -77,7 +80,7 @@ const Messages = ({ sendMessage }) => {
           <span>
             {messageCount}
             {' '}
-            {i18next.t('messages')}
+            {t('messages')}
           </span>
         </div>
         <div className="bg-white overflow-auto px-5">
@@ -86,7 +89,7 @@ const Messages = ({ sendMessage }) => {
         <div className="mt-auto px-5 py-3">
           <form onSubmit={handleFormSubmit}>
             <input value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} />
-            <button type="submit" className="btn btn-outline-primary">{i18next.t('send')}</button>
+            <button type="submit" className="btn btn-outline-primary">{t('send')}</button>
           </form>
         </div>
       </div>

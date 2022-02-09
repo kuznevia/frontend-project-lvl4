@@ -1,20 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 
-const Chat = ({
-  sendMessage,
-  addChannel,
-  removeChannel,
-  renameChannel,
-}) => {
+const Chat = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   dispatch(setActiveUser(localStorage.getItem('username')));
 
@@ -36,7 +32,7 @@ const Chat = ({
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
-      toast.error(i18next.t('connectionFailed'));
+      toast.error(t('connectionFailed'));
       console.log(e);
     }
   };
@@ -48,14 +44,10 @@ const Chat = ({
       <div className="container-xxl shadow mx-5 h-100">
         <div className="row h-100 g-0">
           <div className="col-md-2">
-            <Channels
-              addChannel={addChannel}
-              removeChannel={removeChannel}
-              renameChannel={renameChannel}
-            />
+            <Channels />
           </div>
           <div className="col-md-10">
-            <Messages sendMessage={sendMessage} />
+            <Messages />
           </div>
         </div>
       </div>

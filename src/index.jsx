@@ -1,22 +1,40 @@
 // @ts-check
 import React from 'react';
-import i18next from 'i18next';
-import { Provider } from 'react-redux';
+import i18n from 'i18next';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
 
 import App from './App.jsx';
 import store from './slices/index.js';
 import resources from './resources/index.js';
 
 export default async (socket) => {
-  await i18next.init({
+  const i18nextInstance = i18n.createInstance();
+
+  await i18nextInstance.use(initReactI18next).init({
     lng: 'ru',
     debug: true,
     resources,
   });
 
+  const rollbarConfig = {
+    accessToken: 'e219ab426aae4ba8a61815208e2e61af',
+    environment: process.env.NODE_ENV,
+    enabled: process.env.NODE_ENV === 'production',
+    captureUnhandledRejections: true,
+    captureUncaught: true,
+  };
+
   return (
-    <Provider store={store}>
-      <App socket={socket} />
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <ReduxProvider store={store}>
+          <I18nextProvider i18n={i18nextInstance}>
+            <App socket={socket} />
+          </I18nextProvider>
+        </ReduxProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };

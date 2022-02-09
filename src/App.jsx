@@ -9,7 +9,8 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import AuthProvider from './components/AuthProvider.jsx';
+import { AuthProvider } from './contexts/AuthProvider.jsx';
+import { ChatProvider } from './contexts/ChatProvider.jsx';
 import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
 import {
   addNewChannel,
@@ -51,38 +52,6 @@ const App = ({ socket }) => {
     dispatch(channelRename(id, name));
   });
 
-  const sendMessage = ({ text, user, channelId }) => {
-    if (socket.connected) {
-      socket.emit('newMessage', { text, user, channelId });
-    } else {
-      console.log('no connection');
-    }
-  };
-
-  const addChannel = ({ name }) => {
-    if (socket.connected) {
-      socket.emit('newChannel', { name });
-    } else {
-      console.log('no connection');
-    }
-  };
-
-  const removeChannel = ({ id }) => {
-    if (socket.connected) {
-      socket.emit('removeChannel', { id });
-    } else {
-      console.log('no connection');
-    }
-  };
-
-  const renameChannel = ({ id, name }) => {
-    if (socket.connected) {
-      socket.emit('renameChannel', { id, name });
-    } else {
-      console.log('no connection');
-    }
-  };
-
   return (
     <AuthProvider>
       <Router>
@@ -93,11 +62,9 @@ const App = ({ socket }) => {
               path="/"
               element={
                 <PrivateRoute value="chat">
-                  <Chat
-                    sendMessage={sendMessage}
-                    addChannel={addChannel}
-                    removeChannel={removeChannel}
-                    renameChannel={renameChannel} />
+                  <ChatProvider socket={socket}>
+                    <Chat />
+                  </ChatProvider>
                 </PrivateRoute>
                 }
             />

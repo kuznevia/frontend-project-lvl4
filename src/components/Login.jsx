@@ -2,11 +2,12 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useRollbar } from '@rollbar/react';
 import cn from 'classnames';
-import AuthContext from '../AuthContext';
+import { AuthContext } from '../contexts/AuthProvider.jsx';
 
 const Login = () => {
   const [inputValid, setInputValid] = useState(true);
@@ -14,6 +15,8 @@ const Login = () => {
     'is-invalid': !inputValid,
   });
   const { login } = useContext(AuthContext);
+  const rollbar = useRollbar();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +39,8 @@ const Login = () => {
         login(response.data);
       } catch (e) {
         console.log(e);
-        actions.setStatus(i18next.t('notCorrectNameOrPassword'));
+        rollbar.warning(t('notCorrectNameOrPassword'));
+        actions.setStatus(t('notCorrectNameOrPassword'));
         setInputValid(false);
       }
     },
@@ -49,7 +53,7 @@ const Login = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h1 className="text-center mb-4">{i18next.t('login')}</h1>
+                <h1 className="text-center mb-4">{t('login')}</h1>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
@@ -59,9 +63,9 @@ const Login = () => {
                     required
                     name="username"
                     id="username"
-                    placeholder={i18next.t('yourNick')}
+                    placeholder={t('yourNick')}
                   />
-                  <label htmlFor="username" hidden>{i18next.t('yourNick')}</label>
+                  <label htmlFor="username" hidden>{t('yourNick')}</label>
                 </div>
                 <div className="form-floating mb-4 form-group">
                   <input
@@ -72,12 +76,12 @@ const Login = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder={i18next.t('password')}
+                    placeholder={t('password')}
                   />
-                  <label htmlFor="password" hidden>{i18next.t('password')}</label>
+                  <label htmlFor="password" hidden>{t('password')}</label>
                   <div className="text-danger">{formik.status}</div>
                 </div>
-                <button type="submit" className="btn btn-outline-primary w-100">{i18next.t('login')}</button>
+                <button type="submit" className="btn btn-outline-primary w-100">{t('login')}</button>
               </form>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img className="rounded-circle" src="https://i.ibb.co/s3LZHBB/login.jpg" alt="Войти" />
@@ -85,8 +89,8 @@ const Login = () => {
             </div>
             <div className="card-footer w-100 p-4">
               <div className="text-center">
-                <span>{i18next.t('noAccount')}</span>
-                <Link to="/signup">{i18next.t('registration')}</Link>
+                <span>{t('noAccount')}</span>
+                <Link to="/signup">{t('registration')}</Link>
               </div>
             </div>
           </div>

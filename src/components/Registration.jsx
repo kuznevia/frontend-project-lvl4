@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import AuthContext from '../AuthContext';
+import { AuthContext } from '../contexts/AuthProvider.jsx';
 
 const Registration = () => {
   const { login } = useContext(AuthContext);
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -18,13 +19,13 @@ const Registration = () => {
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required')
-        .min(3, `${i18next.t('numberOfSymbols')}`)
-        .max(20, `${i18next.t('numberOfSymbols')}`),
+        .min(3, `${t('numberOfSymbols')}`)
+        .max(20, `${t('numberOfSymbols')}`),
       password: Yup.string()
         .required('Required')
-        .min(6, `${i18next.t('minimumNumberOfSymbols')}`),
+        .min(6, `${t('minimumNumberOfSymbols')}`),
       passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], `${i18next.t('passwordsShouldBeEqual')}`),
+        .oneOf([Yup.ref('password'), null], `${t('passwordsShouldBeEqual')}`),
     }),
     onSubmit: async ({ username, password }, actions) => {
       try {
@@ -47,7 +48,7 @@ const Registration = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h1 className="text-center mb-4">{i18next.t('registration')}</h1>
+                <h1 className="text-center mb-4">{t('registration')}</h1>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
@@ -56,9 +57,9 @@ const Registration = () => {
                     required
                     name="username"
                     id="username"
-                    placeholder={i18next.t('nickName')}
+                    placeholder={t('nickName')}
                   />
-                  <label htmlFor="username" hidden>{i18next.t('nickName')}</label>
+                  <label htmlFor="username" hidden>{t('nickName')}</label>
                   {formik.touched.username && formik.errors.username ? (
                     <div className="text-danger">{formik.errors.username}</div>
                   ) : null}
@@ -72,9 +73,9 @@ const Registration = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder={i18next.t('password')}
+                    placeholder={t('password')}
                   />
-                  <label htmlFor="password" hidden>{i18next.t('password')}</label>
+                  <label htmlFor="password" hidden>{t('password')}</label>
                   {formik.touched.password && formik.errors.password ? (
                     <div className="text-danger">{formik.errors.password}</div>
                   ) : null}
@@ -88,15 +89,15 @@ const Registration = () => {
                     required
                     name="passwordConfirm"
                     id="passwordConfirm"
-                    placeholder={i18next.t('passwordCornfirmation')}
+                    placeholder={t('passwordCornfirmation')}
                   />
-                  <label htmlFor="passwordConfirm" hidden>{i18next.t('passwordCornfirmation')}</label>
+                  <label htmlFor="passwordConfirm" hidden>{t('passwordCornfirmation')}</label>
                   {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
                     <div className="text-danger">{formik.errors.passwordConfirm}</div>
                   ) : null}
                   <div className="text-danger">{formik.status}</div>
                 </div>
-                <button type="submit" className="btn btn-outline-primary w-100">{i18next.t('registr')}</button>
+                <button type="submit" className="btn btn-outline-primary w-100">{t('registr')}</button>
               </form>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img className="rounded-circle" src="https://i.ibb.co/G3ytQCC/image.jpg" alt="Войти" />
