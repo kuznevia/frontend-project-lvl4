@@ -12,22 +12,23 @@ const Channels = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const channelsClassNames = cn('light');
-  const activeChannelClassnames = cn('primary');
+  const channelsClassNames = cn('light', 'w-100', 'rounded-0', 'text-start');
+  const activeChannelClassnames = cn('primary', 'w-100', 'rounded-0', 'text-start');
 
   const setCurrent = (e) => {
+    console.log(e.target);
     dispatch(setCurrentChannel(Number(e.target.id)));
   };
 
   return (
-    <div className="d-flex flex-column align-items-center bg-light pt-5 h-100 border-right">
-      <div className="d-flex justify-content-around align-items-center w-100">
-        <p className="m-0 p-0">{t('channels')}</p>
+    <>
+      <div className="d-flex justify-content-between align-items-center mb-2 px-4">
+        <span>{t('channels')}</span>
         <ModalVindowAdd />
       </div>
-      <div className="d-flex flex-column">
+      <ul className="nav flex-column nav-pills nav-fill px-2">
         {channelsList.map((item) => (
-          <div key={item.id} id={item.id} className="d-flex justify-content-around align-items-center w-100">
+          <li key={item.id} id={item.id} className="nav-item w-100">
             <ChannelDropDown
               setCurrent={setCurrent}
               activeClasses={activeChannelId === item.id
@@ -37,10 +38,10 @@ const Channels = () => {
               itemName={item.name}
               removable={item.removable}
             />
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </>
   );
 };
 

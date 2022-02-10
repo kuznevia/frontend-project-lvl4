@@ -30,6 +30,7 @@ const ChannelDropDown = ({
   if (!removable) {
     return (
       <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>
+        <span className="mr-1">#</span>
         {itemName}
       </Button>
     );
@@ -84,7 +85,10 @@ const ChannelDropDown = ({
 
   return (
     <Dropdown as={ButtonGroup}>
-      <Button onClick={setCurrent} variant={activeClasses}>{itemName}</Button>
+      <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>
+        <span className="mr-1">#</span>
+        {itemName}
+      </Button>
 
       <Dropdown.Toggle role="button" split variant={activeClasses} id="dropdown-split-basic">
         <span className="d-none">{t('manageChannel')}</span>

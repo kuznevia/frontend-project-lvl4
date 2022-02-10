@@ -41,12 +41,12 @@ const Chat = () => {
 
   return (
     <>
-      <div className="container-xxl shadow mx-5 h-100">
-        <div className="row h-100 g-0">
-          <div className="col-md-2">
+      <div className="container shadow my-4 overflow-hidden h-100 rounded">
+        <div className="row h-100 bg-white flex-md-row">
+          <div className="col-4 col-md-2 border-right pt-3 px-0 bg-light">
             <Channels />
           </div>
-          <div className="col-md-10">
+          <div className="col p-0 h-100">
             <Messages />
           </div>
         </div>

@@ -36,6 +36,7 @@ const resources = {
       minimumNumberOfSymbols: 'Не менее 6 символов',
       manageChannel: 'Управление каналом',
       connectionFailed: 'Ошибка соединения',
+      userExists: 'Такой пользователь уже существует',
     },
   },
 };
