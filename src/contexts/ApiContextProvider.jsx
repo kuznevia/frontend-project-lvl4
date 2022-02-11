@@ -1,9 +1,8 @@
 import React from 'react';
 
-export const ChatContext = React.createContext(null);
+export const ApiContext = React.createContext(null);
 
-export const ChatProvider = ({ children, socket }) => {
-  console.log(socket);
+export const ApiContextProvider = ({ children, socket }) => {
   const sendMessage = ({ text, user, channelId }) => {
     if (socket.connected) {
       socket.emit('newMessage', { text, user, channelId });
@@ -37,7 +36,7 @@ export const ChatProvider = ({ children, socket }) => {
   };
 
   return (
-    <ChatContext.Provider value={{
+    <ApiContext.Provider value={{
       sendMessage,
       addChannel,
       removeChannel,
@@ -45,6 +44,6 @@ export const ChatProvider = ({ children, socket }) => {
     }}
     >
       {children}
-    </ChatContext.Provider>
+    </ApiContext.Provider>
   );
 };

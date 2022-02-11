@@ -1,14 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import cn from 'classnames';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
+import routes from '../routes.js';
 
 const Registration = () => {
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const [inputValid, setInputValid] = useState(true);
@@ -41,6 +44,7 @@ const Registration = () => {
           password,
         });
         login(response.data);
+        navigate(routes.mainChatPage());
       } catch (e) {
         console.log(e);
         rollbar.warning(t('userExists'));
@@ -57,7 +61,7 @@ const Registration = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h1 className="text-center mb-4">{t('registration')}</h1>
+                <h2 className="text-center mb-4">{t('registration')}</h2>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}

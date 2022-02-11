@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
-import { ChatContext } from '../contexts/ChatProvider.jsx';
+import { ApiContext } from '../contexts/ApiContextProvider.jsx';
 
 const ModalVindowAdd = () => {
   const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ const ModalVindowAdd = () => {
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
   const { t } = useTranslation();
-  const { addChannel } = useContext(ChatContext);
+  const { addChannel } = useContext(ApiContext);
 
   const handleInputChange = (e) => {
     setText(e.target.value);

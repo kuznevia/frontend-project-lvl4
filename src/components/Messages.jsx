@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
-import { ChatContext } from '../contexts/ChatProvider.jsx';
+import { ApiContext } from '../contexts/ApiContextProvider.jsx';
 
 const Messages = () => {
   const [inputText, setInputText] = useState('');
@@ -10,7 +10,7 @@ const Messages = () => {
   const channels = useSelector((state) => state.channels.channels);
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
-  const { sendMessage } = useContext(ChatContext);
+  const { sendMessage } = useContext(ApiContext);
   const { t } = useTranslation();
 
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);

@@ -9,8 +9,6 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from './contexts/AuthProvider.jsx';
-import { ChatProvider } from './contexts/ChatProvider.jsx';
 import { sendNewMessages, deleteMessages } from './slices/messagesSlice.js';
 import {
   addNewChannel,
@@ -24,6 +22,7 @@ import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
+import routes from './routes.js';
 
 const App = ({ socket }) => {
   const dispatch = useDispatch();
@@ -53,53 +52,41 @@ const App = ({ socket }) => {
   });
 
   return (
-    <AuthProvider>
-      <Router>
-        <div className="d-flex flex-column h-100">
-          <Nav />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PrivateRoute value="chat">
-                  <ChatProvider socket={socket}>
-                    <Chat />
-                  </ChatProvider>
-                </PrivateRoute>
-                }
-            />
-            <Route
-              path="/login"
-              element={
-                <PrivateRoute value="loginAndSignUp">
-                  <Login />
-                </PrivateRoute>
-                }
-            />
-            <Route
-              path="/signup"
-              element={
-                <PrivateRoute value="loginAndSignUp">
-                  <Registration />
-                </PrivateRoute>
-                }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-      />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <div className="d-flex flex-column h-100">
+        <Nav />
+        <Routes>
+          <Route
+            path={routes.mainChatPage()}
+            element={
+              <PrivateRoute>
+                <Chat />
+              </PrivateRoute>
+              }
+          />
+          <Route
+            path={routes.loginPage()}
+            element={<Login />}
+          />
+          <Route
+            path={routes.signupPage()}
+            element={<Registration />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+    />
+    </Router>
   );
 };
 

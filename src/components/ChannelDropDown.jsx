@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import cn from 'classnames';
-import { ChatContext } from '../contexts/ChatProvider.jsx';
+import { ApiContext } from '../contexts/ApiContextProvider.jsx';
 
 const ChannelDropDown = ({
   setCurrent,
@@ -25,7 +25,7 @@ const ChannelDropDown = ({
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
   const { t } = useTranslation();
-  const { removeChannel, renameChannel } = useContext(ChatContext);
+  const { removeChannel, renameChannel } = useContext(ApiContext);
 
   if (!removable) {
     return (

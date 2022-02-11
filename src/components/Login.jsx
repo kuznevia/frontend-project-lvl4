@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
 import cn from 'classnames';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
+import routes from '../routes.js';
 
 const Login = () => {
   const [inputValid, setInputValid] = useState(true);
@@ -16,6 +17,7 @@ const Login = () => {
   });
   const { login } = useContext(AuthContext);
   const rollbar = useRollbar();
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const formik = useFormik({
@@ -37,6 +39,7 @@ const Login = () => {
           password,
         });
         login(response.data);
+        navigate(routes.mainChatPage());
       } catch (e) {
         console.log(e);
         rollbar.warning(t('notCorrectNameOrPassword'));
@@ -53,7 +56,7 @@ const Login = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h1 className="text-center mb-4">{t('login')}</h1>
+                <h2 className="text-center mb-4">{t('login')}</h2>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
