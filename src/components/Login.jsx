@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useRollbar } from '@rollbar/react';
@@ -41,10 +42,15 @@ const Login = () => {
         login(response.data);
         navigate(routes.mainChatPage());
       } catch (e) {
-        console.log(e);
-        rollbar.warning(t('notCorrectNameOrPassword'));
-        actions.setStatus(t('notCorrectNameOrPassword'));
-        setInputValid(false);
+        if (e.response.status === 401) {
+          rollbar.warning(t('notCorrectNameOrPassword'));
+          actions.setStatus(t('notCorrectNameOrPassword'));
+          setInputValid(false);
+          return;
+        }
+        rollbar.error(e.message);
+        toast.error(t('connectionFailed'));
+        throw e;
       }
     },
   });

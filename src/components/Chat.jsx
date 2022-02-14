@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useRollbar } from '@rollbar/react';
 import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
+import { AuthContext } from '../contexts/AuthProvider.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const rollbar = useRollbar();
+  const { logout } = useContext(AuthContext);
 
   dispatch(setActiveUser(localStorage.getItem('username')));
 
@@ -32,8 +36,12 @@ const Chat = () => {
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
+      if (e.response.status === 401) {
+        rollbar.warning(t('notCorrectNameOrPassword'));
+        logout();
+      }
       toast.error(t('connectionFailed'));
-      console.log(e);
+      throw e;
     }
   };
 

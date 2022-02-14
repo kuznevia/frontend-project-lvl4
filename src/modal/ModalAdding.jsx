@@ -6,7 +6,7 @@ import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
 import { ApiContext } from '../contexts/ApiContextProvider.jsx';
 
-const ModalVindowAdd = () => {
+const ModalAdding = () => {
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
@@ -93,4 +93,4 @@ const ModalVindowAdd = () => {
   );
 };
 
-export default ModalVindowAdd;
+export default ModalAdding;

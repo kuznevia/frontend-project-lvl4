@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import cn from 'classnames';
@@ -46,10 +47,15 @@ const Registration = () => {
         login(response.data);
         navigate(routes.mainChatPage());
       } catch (e) {
-        console.log(e);
-        rollbar.warning(t('userExists'));
-        actions.setStatus(t('userExists'));
-        setInputValid(false);
+        if (e.response.status === 409) {
+          rollbar.warning(t('userExists'));
+          actions.setStatus(t('userExists'));
+          setInputValid(false);
+          return;
+        }
+        rollbar.error(e.message);
+        toast.error(t('connectionFailed'));
+        throw e;
       }
     },
   });

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
-import ModalVindowAdd from './ModalAdd.jsx';
+import Modal from '../modal/Modal.jsx';
 import ChannelDropDown from './ChannelDropDown.jsx';
 
 const Channels = () => {
@@ -16,7 +16,6 @@ const Channels = () => {
   const activeChannelClassnames = cn('primary', 'w-100', 'rounded-0', 'text-start');
 
   const setCurrent = (e) => {
-    console.log(e.target);
     dispatch(setCurrentChannel(Number(e.target.id)));
   };
 
@@ -24,7 +23,9 @@ const Channels = () => {
     <>
       <div className="d-flex justify-content-between align-items-center mb-2 px-4">
         <span>{t('channels')}</span>
-        <ModalVindowAdd />
+        <Modal type="add" />
+        <Modal type="remove" />
+        <Modal type="rename" />
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">
         {channelsList.map((item) => (
