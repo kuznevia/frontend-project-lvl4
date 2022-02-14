@@ -42,7 +42,6 @@ const Chat = () => {
         return;
       }
       toast.error(t('connectionFailed'));
-      throw e;
     }
   };
 

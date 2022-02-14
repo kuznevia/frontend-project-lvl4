@@ -50,7 +50,6 @@ const Login = () => {
         }
         rollbar.error(e.message);
         toast.error(t('connectionFailed'));
-        throw e;
       }
     },
   });
