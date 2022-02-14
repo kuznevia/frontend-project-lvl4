@@ -3,24 +3,13 @@ import ModalAdding from './ModalAdding.jsx';
 import ModalRemoving from './ModalRemoving.jsx';
 import ModalRenaming from './ModalRenaming.jsx';
 
-const Modal = ({
-  type,
-  handleRename,
-  inputClassNames,
-  text,
-  handleInputChange,
-}) => {
+const Modal = ({ type }) => {
   switch (type) {
     case 'add':
       return <ModalAdding />;
     case 'rename':
       return (
-        <ModalRenaming
-          handleRename={handleRename}
-          inputClassNames={inputClassNames}
-          text={text}
-          handleInputChange={handleInputChange}
-        />
+        <ModalRenaming />
       );
     case 'remove':
       return <ModalRemoving />;

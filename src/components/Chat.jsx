@@ -39,6 +39,7 @@ const Chat = () => {
       if (e.response.status === 401) {
         rollbar.warning(t('notCorrectNameOrPassword'));
         logout();
+        return;
       }
       toast.error(t('connectionFailed'));
       throw e;
