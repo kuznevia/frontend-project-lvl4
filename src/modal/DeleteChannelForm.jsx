@@ -4,23 +4,22 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { setActiveModal } from '../slices/modalSlice.js';
+import { closeModal } from '../slices/modalSlice.js';
 
 const DeleteChannelForm = () => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
   const show = useSelector((state) => state.modal.activeModal);
-  const id = useSelector((state) => state.modal.channelId);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
     toast.success(t('channelRemoved'));
     removeChannel({ id });
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   return (

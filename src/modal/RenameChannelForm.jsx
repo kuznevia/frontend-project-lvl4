@@ -5,13 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
 import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { setActiveModal } from '../slices/modalSlice.js';
+import { closeModal } from '../slices/modalSlice.js';
 
 const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const show = useSelector((state) => state.modal.activeModal);
-  const id = useSelector((state) => state.modal.channelId);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const { renameChannel } = useContext(ApiContext);
@@ -28,7 +27,7 @@ const RenameChannelForm = () => {
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   const handleRename = (e) => {

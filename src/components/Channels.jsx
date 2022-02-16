@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../slices/channelsSlice.js';
-import { setActiveModal } from '../slices/modalSlice.js';
+import { openModal } from '../slices/modalSlice.js';
 import ChannelDropDown from './ChannelDropDown.jsx';
 
 const Channels = () => {
@@ -16,7 +16,7 @@ const Channels = () => {
   const activeChannelClassnames = cn('primary', 'w-100', 'rounded-0', 'text-start');
 
   const openAddModal = () => {
-    dispatch(setActiveModal({ activeModal: 'add', show: true, channelId: null }));
+    dispatch(openModal({ activeModal: 'add' }));
   };
 
   const setCurrent = (e) => {

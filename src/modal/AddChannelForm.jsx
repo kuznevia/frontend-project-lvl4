@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
 import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { setActiveModal } from '../slices/modalSlice.js';
+import { closeModal } from '../slices/modalSlice.js';
 
 const AddChannelForm = () => {
   const [text, setText] = useState('');
@@ -22,7 +22,7 @@ const AddChannelForm = () => {
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   const onEntered = () => {
@@ -42,7 +42,7 @@ const AddChannelForm = () => {
     }
     toast.success(t('channelAdded'));
     addChannel({ name: text });
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
