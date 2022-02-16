@@ -17,6 +17,7 @@ import {
   channelRename,
 } from './slices/channelsSlice.js';
 import Login from './components/Login.jsx';
+import { setActiveModal } from './slices/modalSlice.js';
 import Chat from './components/Chat.jsx';
 import Registration from './components/Registration.jsx';
 import NotFound from './components/NotFound.jsx';
@@ -39,6 +40,7 @@ const App = ({ socket }) => {
     const { id } = channel;
     dispatch(addNewChannel({ channel }));
     dispatch(setCurrentChannel(id));
+    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
   });
 
   socket.on('removeChannel', (id) => {

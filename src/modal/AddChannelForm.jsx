@@ -29,7 +29,7 @@ const AddChannelForm = () => {
     inputRef.current.focus();
   };
 
-  const handleAdd = async (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
@@ -41,8 +41,7 @@ const AddChannelForm = () => {
       return;
     }
     toast.success(t('channelAdded'));
-    await addChannel({ name: text });
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    addChannel({ name: text });
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
