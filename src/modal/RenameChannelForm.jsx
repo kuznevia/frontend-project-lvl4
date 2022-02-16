@@ -44,6 +44,7 @@ const RenameChannelForm = () => {
     }
     toast.success(t('channelRenamed'));
     renameChannel({ name: text, id });
+    dispatch(closeModal());
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
