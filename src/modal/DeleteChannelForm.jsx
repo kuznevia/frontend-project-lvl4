@@ -14,9 +14,9 @@ const DeleteChannelForm = () => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
+    toast.success(t('channelRemoved'));
     removeChannel({ id });
     dispatch(setActiveModal({ activeModal: false, channelId: null }));
-    toast.success(t('channelRemoved'));
   };
 
   const handleClose = () => {

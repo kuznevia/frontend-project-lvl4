@@ -42,9 +42,9 @@ const RenameChannelForm = () => {
       setAlert('Channel name has to be unique');
       return;
     }
+    toast.success(t('channelRenamed'));
     renameChannel({ name: text, id });
     dispatch(setActiveModal({ activeModal: false, channelId: null }));
-    toast.success(t('channelRenamed'));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
