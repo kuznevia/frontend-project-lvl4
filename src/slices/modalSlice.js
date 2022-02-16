@@ -4,8 +4,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  activeModal: 'none',
-  show: false,
+  activeModal: false,
   channelId: null,
 };
 
@@ -14,9 +13,8 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     setActiveModal: (state, action) => {
-      const { activeModal, show, channelId } = action.payload;
+      const { activeModal, channelId } = action.payload;
       state.activeModal = activeModal;
-      state.show = show;
       state.channelId = channelId;
     },
   },

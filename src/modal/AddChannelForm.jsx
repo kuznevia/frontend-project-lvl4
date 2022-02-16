@@ -14,7 +14,7 @@ const AddChannelForm = () => {
   const inputRef = useRef(null);
   const { t } = useTranslation();
   const { addChannel } = useContext(ApiContext);
-  const show = useSelector((state) => state.modal.show);
+  const show = useSelector((state) => state.modal.activeModal);
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
@@ -22,7 +22,7 @@ const AddChannelForm = () => {
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
   };
 
   const onEntered = () => {
@@ -42,6 +42,7 @@ const AddChannelForm = () => {
     }
     toast.success(t('channelAdded'));
     addChannel({ name: text });
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {

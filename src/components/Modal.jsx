@@ -11,7 +11,7 @@ const Modal = ({ type }) => {
       return <RenameChannelForm />;
     case 'remove':
       return <DeleteChannelForm />;
-    case 'none':
+    case false:
       return null;
     default:
       throw new Error(`Unknown type: ${type}`);

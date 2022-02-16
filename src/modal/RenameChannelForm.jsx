@@ -10,7 +10,7 @@ import { setActiveModal } from '../slices/modalSlice.js';
 const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
-  const show = useSelector((state) => state.modal.show);
+  const show = useSelector((state) => state.modal.activeModal);
   const id = useSelector((state) => state.modal.channelId);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
@@ -28,7 +28,7 @@ const RenameChannelForm = () => {
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
   };
 
   const handleRename = (e) => {
@@ -43,7 +43,7 @@ const RenameChannelForm = () => {
       return;
     }
     renameChannel({ name: text, id });
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
     toast.success(t('channelRenamed'));
   };
 

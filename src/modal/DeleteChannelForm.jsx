@@ -9,18 +9,18 @@ import { setActiveModal } from '../slices/modalSlice.js';
 const DeleteChannelForm = () => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
-  const show = useSelector((state) => state.modal.show);
+  const show = useSelector((state) => state.modal.activeModal);
   const id = useSelector((state) => state.modal.channelId);
   const dispatch = useDispatch();
 
   const handleDelete = () => {
     removeChannel({ id });
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
     toast.success(t('channelRemoved'));
   };
 
   const handleClose = () => {
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    dispatch(setActiveModal({ activeModal: false, channelId: null }));
   };
 
   return (

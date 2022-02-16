@@ -19,14 +19,12 @@ const ChannelDropDown = ({
   const dispatch = useDispatch();
 
   const handleDropdownRemove = () => {
-    dispatch(setActiveModal({ activeModal: 'remove', show: true, channelId: id }));
+    dispatch(setActiveModal({ activeModal: 'remove', channelId: id }));
   };
 
   const handleDropdownRename = () => {
-    dispatch(setActiveModal({ activeModal: 'rename', show: true, channelId: id }));
+    dispatch(setActiveModal({ activeModal: 'rename', channelId: id }));
   };
-
-  console.log('another one');
 
   if (!removable) {
     return (
