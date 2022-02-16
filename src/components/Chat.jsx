@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
@@ -9,12 +9,14 @@ import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
+import Modal from './Modal.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const rollbar = useRollbar();
   const { logout } = useContext(AuthContext);
+  const currentModalType = useSelector((state) => state.modal.activeModal);
 
   dispatch(setActiveUser(localStorage.getItem('username')));
 
@@ -36,6 +38,10 @@ const Chat = () => {
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
     } catch (e) {
+      if (e.message === 'Network Error') {
+        toast.error(t('connectionFailed'));
+        return;
+      }
       if (e.response.status === 401) {
         rollbar.warning(t('notCorrectNameOrPassword'));
         logout();
@@ -49,6 +55,7 @@ const Chat = () => {
 
   return (
     <>
+      <Modal type={currentModalType} />
       <div className="container shadow my-4 overflow-hidden h-100 rounded">
         <div className="row h-100 bg-white flex-md-row">
           <div className="col-4 col-md-2 border-right pt-3 px-0 bg-light">

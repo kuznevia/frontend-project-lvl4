@@ -42,6 +42,10 @@ const Login = () => {
         login(response.data);
         navigate(routes.mainChatPage());
       } catch (e) {
+        if (e.message === 'Network Error') {
+          toast.error(t('connectionFailed'));
+          return;
+        }
         if (e.response.status === 401) {
           rollbar.warning(t('notCorrectNameOrPassword'));
           actions.setStatus(t('notCorrectNameOrPassword'));

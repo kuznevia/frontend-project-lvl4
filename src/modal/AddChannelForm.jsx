@@ -1,31 +1,35 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import cn from 'classnames';
 import { toast } from 'react-toastify';
-import { ModalContext } from '../contexts/ModalContextProvider.jsx';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, Modal } from 'react-bootstrap';
+import cn from 'classnames';
 import { ApiContext } from '../contexts/ApiContextProvider.jsx';
+import { setActiveModal } from '../slices/modalSlice.js';
 
-const ModalRenaming = () => {
-  const { showRename, handleCloseRename, modalChannelId } = useContext(ModalContext);
-  const { t } = useTranslation();
-  const inputRef = useRef(null);
+const AddChannelForm = () => {
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
-  const { renameChannel } = useContext(ApiContext);
-
   const channelsList = useSelector((state) => state.channels.channels);
-
-  const onEntered = () => {
-    inputRef.current.focus();
-  };
+  const inputRef = useRef(null);
+  const { t } = useTranslation();
+  const { addChannel } = useContext(ApiContext);
+  const show = useSelector((state) => state.modal.show);
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
 
-  const handleRename = (e) => {
+  const handleClose = () => {
+    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+  };
+
+  const onEntered = () => {
+    inputRef.current.focus();
+  };
+
+  const handleAdd = (e) => {
     e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
@@ -36,26 +40,20 @@ const ModalRenaming = () => {
       setAlert('Channel name has to be unique');
       return;
     }
-    renameChannel({ name: text, id: modalChannelId });
-    setText('');
-    handleCloseRename();
-    toast.success(t('channelRenamed'));
+    addChannel({ name: text });
+    toast.success(t('channelAdded'));
+    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
   };
 
-  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
+  const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
     'border-primary': !alert,
     'border-danger': alert,
   });
 
   return (
-    <Modal
-      onSubmit={handleRename}
-      show={showRename}
-      onHide={handleCloseRename}
-      onEntered={onEntered}
-    >
+    <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
       <Modal.Header>
-        <Modal.Title>{t('setNewChannelName')}</Modal.Title>
+        <Modal.Title>{t('addNewChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form className="form-group">
@@ -69,8 +67,8 @@ const ModalRenaming = () => {
           />
           <label htmlFor="name" hidden>{t('channelName')}</label>
           {alert && <span className="text-danger">{alert}</span>}
-          <div className="d-flex justify-content-end mt-1">
-            <Button className="mr-2" type="button" variant="secondary" onClick={handleCloseRename}>
+          <div className="d-flex justify-content-end">
+            <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
               {t('cancel')}
             </Button>
             <Button type="submit" variant="primary">
@@ -83,4 +81,4 @@ const ModalRenaming = () => {
   );
 };
 
-export default ModalRenaming;
+export default AddChannelForm;

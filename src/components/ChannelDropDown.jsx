@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Dropdown,
   Button,
   ButtonGroup,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { ModalContext } from '../contexts/ModalContextProvider.jsx';
+import { setActiveModal } from '../slices/modalSlice.js';
 
 const ChannelDropDown = ({
   setCurrent,
@@ -15,14 +16,14 @@ const ChannelDropDown = ({
   removable,
 }) => {
   const { t } = useTranslation();
-  const { handleShowRemove, handleShowRename } = useContext(ModalContext);
+  const dispatch = useDispatch();
 
   const handleDropdownRemove = () => {
-    handleShowRemove(id);
+    dispatch(setActiveModal({ activeModal: 'remove', show: true, channelId: id }));
   };
 
   const handleDropdownRename = () => {
-    handleShowRename(id);
+    dispatch(setActiveModal({ activeModal: 'rename', show: true, channelId: id }));
   };
 
   if (!removable) {

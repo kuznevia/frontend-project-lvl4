@@ -47,6 +47,10 @@ const Registration = () => {
         login(response.data);
         navigate(routes.mainChatPage());
       } catch (e) {
+        if (e.message === 'Network Error') {
+          toast.error(t('connectionFailed'));
+          return;
+        }
         if (e.response.status === 409) {
           rollbar.warning(t('userExists'));
           actions.setStatus(t('userExists'));
