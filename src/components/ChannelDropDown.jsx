@@ -6,7 +6,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { openModal } from '../slices/modalSlice.js';
+import { openModal, setChannelID } from '../slices/modalSlice.js';
 
 const ChannelDropDown = ({
   setCurrent,
@@ -20,10 +20,12 @@ const ChannelDropDown = ({
 
   const handleDropdownRemove = () => {
     dispatch(openModal({ activeModal: 'remove' }));
+    dispatch(setChannelID({ id }));
   };
 
   const handleDropdownRename = () => {
     dispatch(openModal({ activeModal: 'rename' }));
+    dispatch(setChannelID({ id }));
   };
 
   if (!removable) {

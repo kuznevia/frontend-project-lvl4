@@ -10,6 +10,7 @@ const DeleteChannelForm = () => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
   const show = useSelector((state) => state.modal.activeModal);
+  const id = useSelector((state) => state.modal.changingChannelId);
   const dispatch = useDispatch();
 
   const handleDelete = () => {

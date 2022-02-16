@@ -11,6 +11,7 @@ const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const show = useSelector((state) => state.modal.activeModal);
+  const id = useSelector((state) => state.modal.changingChannelId);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const { renameChannel } = useContext(ApiContext);
@@ -43,7 +44,7 @@ const RenameChannelForm = () => {
     }
     toast.success(t('channelRenamed'));
     renameChannel({ name: text, id });
-    dispatch(setActiveModal({ activeModal: false, channelId: null }));
+    dispatch(closeModal());
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {
