@@ -6,7 +6,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { AuthProvider } from './contexts/AuthProvider.jsx';
 import { ApiContextProvider } from './contexts/ApiContextProvider.jsx';
-import { ModalContextProvider } from './contexts/ModalContextProvider.jsx';
 import App from './App.jsx';
 import store from './slices/index.js';
 import resources from './resources/index.js';
@@ -35,9 +34,7 @@ export default async (socket) => {
           <I18nextProvider i18n={i18nextInstance}>
             <AuthProvider>
               <ApiContextProvider socket={socket}>
-                <ModalContextProvider>
-                  <App socket={socket} />
-                </ModalContextProvider>
+                <App socket={socket} />
               </ApiContextProvider>
             </AuthProvider>
           </I18nextProvider>
