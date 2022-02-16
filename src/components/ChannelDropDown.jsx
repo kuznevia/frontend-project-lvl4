@@ -26,6 +26,8 @@ const ChannelDropDown = ({
     dispatch(setActiveModal({ activeModal: 'rename', show: true, channelId: id }));
   };
 
+  console.log('another one');
+
   if (!removable) {
     return (
       <Button onClick={setCurrent} variant={activeClasses} key={id} id={id}>

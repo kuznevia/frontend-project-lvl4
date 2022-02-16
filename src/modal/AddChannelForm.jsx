@@ -40,8 +40,9 @@ const AddChannelForm = () => {
       setAlert('Channel name has to be unique');
       return;
     }
-    addChannel({ name: text });
     toast.success(t('channelAdded'));
+    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
+    addChannel({ name: text });
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
