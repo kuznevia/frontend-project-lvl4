@@ -42,7 +42,6 @@ const AddChannelForm = () => {
     }
     addChannel({ name: text });
     toast.success(t('channelAdded'));
-    dispatch(setActiveModal({ activeModal: 'none', show: false, channelId: null }));
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
