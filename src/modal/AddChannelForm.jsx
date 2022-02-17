@@ -29,7 +29,7 @@ const AddChannelForm = () => {
     inputRef.current.focus();
   };
 
-  const handleAdd = async (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
@@ -40,9 +40,10 @@ const AddChannelForm = () => {
       setAlert('Channel name has to be unique');
       return;
     }
-    await addChannel({ name: text });
+    addChannel({ name: text });
     toast.success(t('channelAdded'));
     dispatch(closeModal());
+    console.log('после этого');
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -30,10 +30,10 @@ const Chat = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     try {
       const response = await authAxios.get(url);
       const { channels, messages, currentChannelId } = response.data;
+      console.log('ну хелло блять');
       dispatch(renderInitialChannels(channels));
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
@@ -51,7 +51,9 @@ const Chat = () => {
     }
   };
 
-  initialRequest();
+  useEffect(() => {
+    initialRequest();
+  }, []);
 
   return (
     <>

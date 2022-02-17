@@ -18,6 +18,7 @@ export const channelsSlice = createSlice({
     },
     setCurrentChannel: (state, action) => {
       const id = action.payload;
+      console.log(id);
       state.currentChannelId = id;
     },
     addNewChannel: (state, action) => {

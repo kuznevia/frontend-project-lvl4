@@ -22,9 +22,7 @@ export const ApiContextProvider = ({ children, socket }) => {
   });
 
   socket.on('newChannel', (channel) => {
-    const { id } = channel;
     dispatch(addNewChannel({ channel }));
-    dispatch(setCurrentChannel(id));
   });
 
   socket.on('removeChannel', (id) => {
@@ -47,7 +45,10 @@ export const ApiContextProvider = ({ children, socket }) => {
 
   const addChannel = ({ name }) => {
     if (socket.connected) {
-      socket.emit('newChannel', { name });
+      socket.emit('newChannel', { name }, (response) => {
+        const { id } = response.data;
+        dispatch(setCurrentChannel(id));
+      });
     } else {
       console.log('no connection');
     }
