@@ -34,7 +34,7 @@ export default async (socket) => {
           <I18nextProvider i18n={i18nextInstance}>
             <AuthProvider>
               <ApiContextProvider socket={socket}>
-                <App socket={socket} />
+                <App />
               </ApiContextProvider>
             </AuthProvider>
           </I18nextProvider>

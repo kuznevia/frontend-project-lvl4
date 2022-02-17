@@ -1,8 +1,42 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { sendNewMessages, deleteMessages } from '../slices/messagesSlice.js';
+import {
+  addNewChannel,
+  setCurrentChannel,
+  deleteChannel,
+  channelRename,
+} from '../slices/channelsSlice.js';
 
 export const ApiContext = React.createContext(null);
 
 export const ApiContextProvider = ({ children, socket }) => {
+  const dispatch = useDispatch();
+
+  socket.on('connect', () => {
+    console.log(socket.id);
+  });
+
+  socket.on('newMessage', (message) => {
+    dispatch(sendNewMessages({ message }));
+  });
+
+  socket.on('newChannel', (channel) => {
+    const { id } = channel;
+    dispatch(addNewChannel({ channel }));
+    dispatch(setCurrentChannel(id));
+  });
+
+  socket.on('removeChannel', (id) => {
+    dispatch(deleteChannel(id));
+    dispatch(deleteMessages(id));
+    dispatch(setCurrentChannel(1));
+  });
+
+  socket.on('renameChannel', (id, name) => {
+    dispatch(channelRename(id, name));
+  });
+
   const sendMessage = ({ text, user, channelId }) => {
     if (socket.connected) {
       socket.emit('newMessage', { text, user, channelId });
