@@ -12,13 +12,12 @@ export const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    renderInitialChannels: (state, action) => {
+    setInitialChannels: (state, action) => {
       state.channels = [];
       action.payload.forEach((channel) => state.channels.push(channel));
     },
     setCurrentChannel: (state, action) => {
       const id = action.payload;
-      console.log(id);
       state.currentChannelId = id;
     },
     addNewChannel: (state, action) => {
@@ -38,7 +37,7 @@ export const channelsSlice = createSlice({
 });
 
 export const {
-  renderInitialChannels,
+  setInitialChannels,
   setCurrentChannel,
   addNewChannel,
   deleteChannel,

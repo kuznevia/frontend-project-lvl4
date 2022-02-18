@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
-import { renderInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
+import Spinner from 'react-bootstrap/Spinner';
+import { setInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
@@ -14,6 +15,7 @@ import Modal from './Modal.jsx';
 const Chat = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [loaded, setLoaded] = useState(false);
   const rollbar = useRollbar();
   const { logout } = useContext(AuthContext);
   const currentModalType = useSelector((state) => state.modal.activeModal);
@@ -33,10 +35,10 @@ const Chat = () => {
     try {
       const response = await authAxios.get(url);
       const { channels, messages, currentChannelId } = response.data;
-      console.log('ну хелло блять');
-      dispatch(renderInitialChannels(channels));
+      dispatch(setInitialChannels(channels));
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
+      setLoaded(true);
     } catch (e) {
       if (e.message === 'Network Error') {
         toast.error(t('connectionFailed'));
@@ -54,6 +56,14 @@ const Chat = () => {
   useEffect(() => {
     initialRequest();
   }, []);
+
+  if (loaded === false) {
+    return (
+      <div className="row d-flex justify-content-center align-items-center h-100">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
+  }
 
   return (
     <>

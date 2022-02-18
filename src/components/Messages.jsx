@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
@@ -11,6 +16,7 @@ const Messages = () => {
   const activeUser = useSelector((state) => state.messages.activeUser);
   const activeChannelId = useSelector((state) => state.channels.currentChannelId);
   const { sendMessage } = useContext(ApiContext);
+  const inputRef = useRef(null);
   const { t } = useTranslation();
 
   const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
@@ -18,6 +24,10 @@ const Messages = () => {
   useEffect(() => {
     filter.loadDictionary('en');
   }, []);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  });
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
@@ -95,7 +105,7 @@ const Messages = () => {
         <div className="mt-auto px-5 py-3">
           <form className="py-1 border rounded-2" onSubmit={handleFormSubmit}>
             <div className="input-group has-validation">
-              <input className="border-0 p-0 px-2 form-control" value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} placeholder="Введите сообщение..." />
+              <input className="border-0 p-0 px-2 form-control" ref={inputRef} value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} placeholder="Введите сообщение..." />
               <div className="input-group-append">
                 <button type="submit" className="btn btn-group-vertical">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

@@ -43,7 +43,6 @@ const AddChannelForm = () => {
     addChannel({ name: text });
     toast.success(t('channelAdded'));
     dispatch(closeModal());
-    console.log('после этого');
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
