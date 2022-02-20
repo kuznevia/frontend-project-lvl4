@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -21,12 +21,14 @@ const Channels = () => {
 
   const setCurrent = (e) => {
     dispatch(setCurrentChannel(Number(e.target.id)));
+  };
+
+  useEffect(() => {
     const messageInput = document.getElementById('message-input-box');
     messageInput.focus();
-    // код ниже не работает //
     const chatBox = document.getElementById('chat-box');
     chatBox.scrollTop = chatBox.scrollHeight;
-  };
+  });
 
   return (
     <>

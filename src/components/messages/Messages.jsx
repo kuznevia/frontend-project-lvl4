@@ -16,11 +16,6 @@ const Messages = () => {
     filter.loadDictionary('en');
   }, []);
 
-  useEffect(() => {
-    const chatBox = document.getElementById('chat-box');
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
-
   const activeChannelName = () => {
     const [activeChannel] = channels.filter((channel) => channel.id === activeChannelId);
     if (activeChannel === undefined) {
