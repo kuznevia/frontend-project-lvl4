@@ -7,6 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import Login from './components/Login.jsx';
@@ -16,14 +17,17 @@ import NotFound from './components/NotFound.jsx';
 import Nav from './components/NavBar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import routes from './routes.js';
+import Modal from './components/modal/Modal.jsx';
 
 const App = () => {
   const { t } = useTranslation();
+  const currentModalType = useSelector((state) => state.modal.modalType);
 
   return (
     <Router>
       <div className="d-flex flex-column h-100">
         <Nav />
+        <Modal type={currentModalType} />
         <Routes>
           <Route
             path={routes.mainChatPage()}

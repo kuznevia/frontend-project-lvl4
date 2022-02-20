@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
@@ -8,9 +8,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import { setInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
 import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
-import Messages from './Messages.jsx';
+import Messages from './messages/Messages.jsx';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
-import Modal from './Modal.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,6 @@ const Chat = () => {
   const [loaded, setLoaded] = useState(false);
   const rollbar = useRollbar();
   const { logout } = useContext(AuthContext);
-  const currentModalType = useSelector((state) => state.modal.activeModal);
 
   dispatch(setActiveUser(localStorage.getItem('username')));
 
@@ -39,6 +37,10 @@ const Chat = () => {
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
       setLoaded(true);
+      const messageInput = document.getElementById('message-input-box');
+      messageInput.focus();
+      const chatBox = document.getElementById('chat-box');
+      chatBox.scrollTop = chatBox.scrollHeight;
     } catch (e) {
       if (e.message === 'Network Error') {
         toast.error(t('connectionFailed'));
@@ -66,19 +68,16 @@ const Chat = () => {
   }
 
   return (
-    <>
-      <Modal type={currentModalType} />
-      <div className="container shadow my-4 overflow-hidden h-100 rounded">
-        <div className="row h-100 bg-white flex-md-row">
-          <div className="col-4 col-md-2 border-right pt-3 px-0 bg-light">
-            <Channels />
-          </div>
-          <div className="col p-0 h-100">
-            <Messages />
-          </div>
+    <div className="container shadow my-4 overflow-hidden h-100 rounded">
+      <div className="row h-100 bg-white flex-md-row">
+        <div className="col-4 col-md-2 border-right pt-3 px-0 bg-light">
+          <Channels />
+        </div>
+        <div className="col p-0 h-100">
+          <Messages />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

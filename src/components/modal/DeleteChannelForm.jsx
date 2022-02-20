@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { closeModal } from '../slices/modalSlice.js';
+import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
+import { closeModal } from '../../slices/modalSlice.js';
 
 const DeleteChannelForm = () => {
   const { removeChannel } = useContext(ApiContext);
   const { t } = useTranslation();
-  const show = useSelector((state) => state.modal.activeModal);
+  const isOpened = useSelector((state) => state.modal.isOpened);
   const id = useSelector((state) => state.modal.changingChannelId);
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const DeleteChannelForm = () => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={isOpened} onHide={handleClose}>
       <Modal.Header>
         <Modal.Title>{t('deleteСhannel')}</Modal.Title>
       </Modal.Header>

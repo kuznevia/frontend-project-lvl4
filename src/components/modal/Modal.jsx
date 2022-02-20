@@ -1,7 +1,7 @@
 import React from 'react';
-import AddChannelForm from '../modal/AddChannelForm.jsx';
-import DeleteChannelForm from '../modal/DeleteChannelForm.jsx';
-import RenameChannelForm from '../modal/RenameChannelForm.jsx';
+import AddChannelForm from './AddChannelForm.jsx';
+import DeleteChannelForm from './DeleteChannelForm.jsx';
+import RenameChannelForm from './RenameChannelForm.jsx';
 
 const Modal = ({ type }) => {
   switch (type) {

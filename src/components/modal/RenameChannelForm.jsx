@@ -4,13 +4,13 @@ import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
-import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { closeModal } from '../slices/modalSlice.js';
+import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
+import { closeModal } from '../../slices/modalSlice.js';
 
 const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
-  const show = useSelector((state) => state.modal.activeModal);
+  const isOpened = useSelector((state) => state.modal.isOpened);
   const id = useSelector((state) => state.modal.changingChannelId);
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
@@ -55,7 +55,7 @@ const RenameChannelForm = () => {
   return (
     <Modal
       onSubmit={handleRename}
-      show={show}
+      show={isOpened}
       onHide={handleClose}
       onEntered={onEntered}
     >

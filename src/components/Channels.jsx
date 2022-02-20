@@ -21,6 +21,11 @@ const Channels = () => {
 
   const setCurrent = (e) => {
     dispatch(setCurrentChannel(Number(e.target.id)));
+    const messageInput = document.getElementById('message-input-box');
+    messageInput.focus();
+    // код ниже не работает //
+    const chatBox = document.getElementById('chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
   };
 
   return (

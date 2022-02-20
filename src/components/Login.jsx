@@ -85,6 +85,7 @@ const Login = () => {
                     value={formik.values.password}
                     type="password"
                     className={inputClassnames}
+                    autoComplete="current-password"
                     required
                     name="password"
                     id="password"

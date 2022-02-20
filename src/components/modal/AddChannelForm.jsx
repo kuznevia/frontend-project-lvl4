@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
-import { ApiContext } from '../contexts/ApiContextProvider.jsx';
-import { closeModal } from '../slices/modalSlice.js';
+import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
+import { closeModal } from '../../slices/modalSlice.js';
 
 const AddChannelForm = () => {
   const [text, setText] = useState('');
@@ -14,7 +14,7 @@ const AddChannelForm = () => {
   const inputRef = useRef(null);
   const { t } = useTranslation();
   const { addChannel } = useContext(ApiContext);
-  const show = useSelector((state) => state.modal.activeModal);
+  const isOpened = useSelector((state) => state.modal.isOpened);
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
@@ -51,7 +51,7 @@ const AddChannelForm = () => {
   });
 
   return (
-    <Modal onSubmit={handleAdd} show={show} onHide={handleClose} onEntered={onEntered}>
+    <Modal onSubmit={handleAdd} show={isOpened} onHide={handleClose} onEntered={onEntered}>
       <Modal.Header>
         <Modal.Title>{t('addNewChannel')}</Modal.Title>
       </Modal.Header>
