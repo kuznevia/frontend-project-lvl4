@@ -37,10 +37,6 @@ const Chat = () => {
       dispatch(visualizeInitialMessages(messages));
       dispatch(setCurrentChannel(currentChannelId));
       setLoaded(true);
-      const messageInput = document.getElementById('message-input-box');
-      messageInput.focus();
-      const chatBox = document.getElementById('chat-box');
-      chatBox.scrollTop = chatBox.scrollHeight;
     } catch (e) {
       if (e.message === 'Network Error') {
         toast.error(t('connectionFailed'));
