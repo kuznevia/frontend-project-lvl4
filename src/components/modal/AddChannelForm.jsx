@@ -32,12 +32,12 @@ const AddChannelForm = () => {
   const handleAdd = (e) => {
     e.preventDefault();
     if (text === '') {
-      setAlert('Name cant be empty');
+      setAlert({ type: 'emptyName' });
       return;
     }
     const checkUniqueNames = channelsList.filter((channel) => channel.name === text);
     if (checkUniqueNames.length > 0) {
-      setAlert('Channel name has to be unique');
+      setAlert({ type: 'emptyName' });
       return;
     }
     addChannel({ name: text });
@@ -66,7 +66,7 @@ const AddChannelForm = () => {
             ref={inputRef}
           />
           <label htmlFor="name" hidden>{t('channelName')}</label>
-          {alert && <span className="text-danger">{alert}</span>}
+          {alert && <span className="text-danger">{t(alert.type)}</span>}
           <div className="d-flex justify-content-end">
             <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
               {t('cancel')}

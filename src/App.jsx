@@ -9,7 +9,6 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 import Login from './components/Login.jsx';
 import Chat from './components/Chat.jsx';
 import Registration from './components/Registration.jsx';
@@ -20,7 +19,7 @@ import routes from './routes.js';
 import Modal from './components/modal/Modal.jsx';
 
 const App = () => {
-  const { t } = useTranslation();
+  const toastAutoCloseTime = 5000;
   const currentModalType = useSelector((state) => state.modal.modalType);
 
   return (
@@ -50,7 +49,7 @@ const App = () => {
       </div>
       <ToastContainer
         position="top-right"
-        autoClose={t('toastCloseTime')}
+        autoClose={toastAutoCloseTime}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

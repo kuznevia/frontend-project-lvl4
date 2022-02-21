@@ -37,7 +37,8 @@ const resources = {
       manageChannel: 'Управление каналом',
       connectionFailed: 'Ошибка соединения',
       userExists: 'Такой пользователь уже существует',
-      toastCloseTime: 5000,
+      emptyName: 'Name can not be empty',
+      uniqueName: 'Channel name has to be unique',
     },
   },
 };
