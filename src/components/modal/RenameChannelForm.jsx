@@ -72,7 +72,7 @@ const RenameChannelForm = () => {
             onChange={handleInputChange}
             ref={inputRef}
           />
-          <label htmlFor="name" hidden>{t('channelName')}</label>
+          <label htmlFor="name" hidden>{t('modalLabels.channelName')}</label>
           {alert && <span className="text-danger">{alert}</span>}
           <div className="d-flex justify-content-end mt-1">
             <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
