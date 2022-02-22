@@ -39,15 +39,17 @@ const Chat = () => {
       setLoaded(true);
     } catch (e) {
       if (e.message === 'Network Error') {
-        toast.error(t('connectionFailed'));
+        rollbar.error(e.message);
+        toast.error(t('errors.connectionFailed'));
         return;
       }
       if (e.response.status === 401) {
-        rollbar.warning(t('notCorrectNameOrPassword'));
+        rollbar.warning(t('errors.notCorrectNameOrPassword'));
         logout();
         return;
       }
-      toast.error(t('connectionFailed'));
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
     }
   };
 

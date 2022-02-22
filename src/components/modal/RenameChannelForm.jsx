@@ -42,7 +42,7 @@ const RenameChannelForm = () => {
       setAlert('Channel name has to be unique');
       return;
     }
-    toast.success(t('channelRenamed'));
+    toast.success(t('toastLabels.channelRenamed'));
     renameChannel({ name: text, id });
     dispatch(closeModal());
   };
@@ -60,7 +60,7 @@ const RenameChannelForm = () => {
       onEntered={onEntered}
     >
       <Modal.Header>
-        <Modal.Title>{t('setNewChannelName')}</Modal.Title>
+        <Modal.Title>{t('modalLabels.setNewChannelName')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form className="form-group">
@@ -76,10 +76,10 @@ const RenameChannelForm = () => {
           {alert && <span className="text-danger">{alert}</span>}
           <div className="d-flex justify-content-end mt-1">
             <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
-              {t('cancel')}
+              {t('actions.cancel')}
             </Button>
             <Button type="submit" variant="primary">
-              {t('send')}
+              {t('actions.send')}
             </Button>
           </div>
         </form>

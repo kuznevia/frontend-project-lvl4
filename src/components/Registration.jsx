@@ -30,13 +30,13 @@ const Registration = () => {
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required')
-        .min(3, `${t('numberOfSymbols')}`)
-        .max(20, `${t('numberOfSymbols')}`),
+        .min(3, `${t('errors.numberOfSymbols')}`)
+        .max(20, `${t('errors.numberOfSymbols')}`),
       password: Yup.string()
         .required('Required')
-        .min(6, `${t('minimumNumberOfSymbols')}`),
+        .min(6, `${t('errors.minimumNumberOfSymbols')}`),
       passwordConfirm: Yup.string()
-        .oneOf([Yup.ref('password'), null], `${t('passwordsShouldBeEqual')}`),
+        .oneOf([Yup.ref('password'), null], `${t('errors.passwordsShouldBeEqual')}`),
     }),
     onSubmit: async ({ username, password }, actions) => {
       try {
@@ -48,17 +48,18 @@ const Registration = () => {
         navigate(routes.mainChatPage());
       } catch (e) {
         if (e.message === 'Network Error') {
-          toast.error(t('connectionFailed'));
+          rollbar.error(e.message);
+          toast.error(t('errors.connectionFailed'));
           return;
         }
         if (e.response.status === 409) {
-          rollbar.warning(t('userExists'));
-          actions.setStatus(t('userExists'));
+          rollbar.warning(t('errors.userExists'));
+          actions.setStatus(t('errors.userExists'));
           setInputValid(false);
           return;
         }
-        rollbar.error(e.message);
-        toast.error(t('connectionFailed'));
+        rollbar.error(t('errors.connectionFailed'));
+        toast.error(t('errors.connectionFailed'));
       }
     },
   });
@@ -70,7 +71,7 @@ const Registration = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h2 className="text-center mb-4">{t('registration')}</h2>
+                <h2 className="text-center mb-4">{t('registrationLabels.registration')}</h2>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
@@ -79,9 +80,9 @@ const Registration = () => {
                     required
                     name="username"
                     id="username"
-                    placeholder={t('nickName')}
+                    placeholder={t('registrationLabels.nickName')}
                   />
-                  <label htmlFor="username" hidden>{t('nickName')}</label>
+                  <label htmlFor="username" hidden>{t('registrationLabels.nickName')}</label>
                   {formik.touched.username && formik.errors.username ? (
                     <div className="text-danger">{formik.errors.username}</div>
                   ) : null}
@@ -95,9 +96,9 @@ const Registration = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder={t('password')}
+                    placeholder={t('registrationLabels.password')}
                   />
-                  <label htmlFor="password" hidden>{t('password')}</label>
+                  <label htmlFor="password" hidden>{t('registrationLabels.password')}</label>
                   {formik.touched.password && formik.errors.password ? (
                     <div className="text-danger">{formik.errors.password}</div>
                   ) : null}
@@ -111,15 +112,15 @@ const Registration = () => {
                     required
                     name="passwordConfirm"
                     id="passwordConfirm"
-                    placeholder={t('passwordCornfirmation')}
+                    placeholder={t('registrationLabels.passwordCornfirmation')}
                   />
-                  <label htmlFor="passwordConfirm" hidden>{t('passwordCornfirmation')}</label>
+                  <label htmlFor="passwordConfirm" hidden>{t('registrationLabels.passwordCornfirmation')}</label>
                   {formik.touched.passwordConfirm && formik.errors.passwordConfirm ? (
                     <div className="text-danger">{formik.errors.passwordConfirm}</div>
                   ) : null}
                   <div className="text-danger">{formik.status}</div>
                 </div>
-                <button type="submit" className="btn btn-outline-primary w-100">{t('registr')}</button>
+                <button type="submit" className="btn btn-outline-primary w-100">{t('actions.registr')}</button>
               </form>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img className="rounded-circle" src="https://i.ibb.co/G3ytQCC/image.jpg" alt="Войти" />

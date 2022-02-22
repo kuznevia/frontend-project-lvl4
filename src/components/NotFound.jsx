@@ -8,7 +8,7 @@ const NotFound = () => {
   return (
     <div>
       <h1>{t('fourzerofour')}</h1>
-      <Link to="/">{t('home')}</Link>
+      <Link to="/">{t('notFoundLabels.home')}</Link>
     </div>
   );
 };

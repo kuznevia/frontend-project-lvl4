@@ -43,17 +43,18 @@ const Login = () => {
         navigate(routes.mainChatPage());
       } catch (e) {
         if (e.message === 'Network Error') {
-          toast.error(t('connectionFailed'));
+          rollbar.error(e.message);
+          toast.error(t('errors.connectionFailed'));
           return;
         }
         if (e.response.status === 401) {
-          rollbar.warning(t('notCorrectNameOrPassword'));
-          actions.setStatus(t('notCorrectNameOrPassword'));
+          rollbar.warning(t('errors.notCorrectNameOrPassword'));
+          actions.setStatus(t('errors.notCorrectNameOrPassword'));
           setInputValid(false);
           return;
         }
-        rollbar.error(e.message);
-        toast.error(t('connectionFailed'));
+        rollbar.error(t('errors.connectionFailed'));
+        toast.error(t('errors.connectionFailed'));
       }
     },
   });
@@ -65,7 +66,7 @@ const Login = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <form className="col-12 col-md-6" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
-                <h2 className="text-center mb-4">{t('login')}</h2>
+                <h2 className="text-center mb-4">{t('loginLabels.login')}</h2>
                 <div className="form-floating mb-3 form-group">
                   <input
                     onChange={formik.handleChange}
@@ -75,9 +76,9 @@ const Login = () => {
                     required
                     name="username"
                     id="username"
-                    placeholder={t('yourNick')}
+                    placeholder={t('loginLabels.yourNick')}
                   />
-                  <label htmlFor="username" hidden>{t('yourNick')}</label>
+                  <label htmlFor="username" hidden>{t('loginLabels.yourNick')}</label>
                 </div>
                 <div className="form-floating mb-4 form-group">
                   <input
@@ -89,12 +90,12 @@ const Login = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder={t('password')}
+                    placeholder={t('loginLabels.password')}
                   />
-                  <label htmlFor="password" hidden>{t('password')}</label>
+                  <label htmlFor="password" hidden>{t('loginLabels.password')}</label>
                   <div className="text-danger">{formik.status}</div>
                 </div>
-                <button type="submit" className="btn btn-outline-primary w-100">{t('login')}</button>
+                <button type="submit" className="btn btn-outline-primary w-100">{t('loginLabels.login')}</button>
               </form>
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img className="rounded-circle" src="https://i.ibb.co/s3LZHBB/login.jpg" alt="Войти" />
@@ -102,8 +103,8 @@ const Login = () => {
             </div>
             <div className="card-footer w-100 p-4">
               <div className="text-center">
-                <span>{t('noAccount')}</span>
-                <Link to="/signup">{t('registration')}</Link>
+                <span>{t('loginLabels.noAccount')}</span>
+                <Link to="/signup">{t('loginLabels.registration')}</Link>
               </div>
             </div>
           </div>

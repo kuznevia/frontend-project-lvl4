@@ -14,7 +14,7 @@ const DeleteChannelForm = () => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    toast.success(t('channelRemoved'));
+    toast.success(t('toastLabels.channelRemoved'));
     removeChannel({ id });
     dispatch(closeModal());
   };
@@ -26,17 +26,17 @@ const DeleteChannelForm = () => {
   return (
     <Modal show={isOpened} onHide={handleClose}>
       <Modal.Header>
-        <Modal.Title>{t('deleteСhannel')}</Modal.Title>
+        <Modal.Title>{t('modalLabels.deleteСhannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {t('youSure')}
+        {t('modalLabels.youSure')}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          {t('cancel')}
+          {t('actions.cancel')}
         </Button>
         <Button variant="danger" onClick={handleDelete}>
-          {t('delete')}
+          {t('actions.delete')}
         </Button>
       </Modal.Footer>
     </Modal>

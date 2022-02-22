@@ -45,12 +45,12 @@ const ChannelDropDown = ({
       </Button>
 
       <Dropdown.Toggle role="button" split variant={activeClasses} id="dropdown-split-basic">
-        <span className="d-none">{t('manageChannel')}</span>
+        <span className="d-none">{t('modalLabels.manageChannel')}</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleDropdownRemove}>{t('delete')}</Dropdown.Item>
-        <Dropdown.Item onClick={handleDropdownRename}>{t('rename')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleDropdownRemove}>{t('actions.delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleDropdownRename}>{t('actions.rename')}</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

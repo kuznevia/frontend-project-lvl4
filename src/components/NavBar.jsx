@@ -10,11 +10,11 @@ const Nav = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <div className="btn navbar-brand" href="/">
-          <Link className="text-dark text-decoration-none" to="/">{t('hexletChat')}</Link>
+          <Link className="text-dark text-decoration-none" to="/">{t('navLabels.hexletChat')}</Link>
         </div>
         {
           authentificated
-          && <button className="btn btn-primary" onClick={logout} type="button">{t('logout')}</button>
+          && <button className="btn btn-primary" onClick={logout} type="button">{t('actions.logout')}</button>
         }
       </div>
     </nav>

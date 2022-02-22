@@ -40,7 +40,7 @@ const Messages = () => {
           <span className="text-muted">
             {messageCount}
             {' '}
-            {t('messages')}
+            {t('chatLabels.messages')}
           </span>
         </div>
         <div id="chat-box" className="overflow-auto px-5">

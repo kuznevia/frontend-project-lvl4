@@ -1,5 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useRollbar } from '@rollbar/react';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { sendNewMessages, deleteMessages } from '../slices/messagesSlice.js';
 import {
   addNewChannel,
@@ -12,10 +15,8 @@ export const ApiContext = React.createContext(null);
 
 export const ApiContextProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
-
-  socket.on('connect', () => {
-    console.log(socket.id);
-  });
+  const rollbar = useRollbar();
+  const { t } = useTranslation();
 
   socket.on('newMessage', (message) => {
     dispatch(sendNewMessages({ message }));
@@ -35,38 +36,62 @@ export const ApiContextProvider = ({ children, socket }) => {
     dispatch(channelRename(id, name));
   });
 
-  const sendMessage = ({ text, user, channelId }) => {
+  const sendMessage = async ({ text, user, channelId }) => {
     if (socket.connected) {
-      socket.emit('newMessage', { text, user, channelId });
+      try {
+        await socket.emit('newMessage', { text, user, channelId });
+      } catch (e) {
+        rollbar.error(t(e.message));
+        toast.error(t('errors.connectionFailed'));
+      }
     } else {
-      console.log('no connection');
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
     }
   };
 
-  const addChannel = ({ name }) => {
+  const addChannel = async ({ name }) => {
     if (socket.connected) {
-      socket.emit('newChannel', { name }, (response) => {
-        const { id } = response.data;
-        dispatch(setCurrentChannel(id));
-      });
+      try {
+        await socket.emit('newChannel', { name }, (response) => {
+          const { id } = response.data;
+          dispatch(setCurrentChannel(id));
+        });
+      } catch (e) {
+        rollbar.error(t(e.message));
+        toast.error(t('errors.connectionFailed'));
+      }
     } else {
-      console.log('no connection');
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
     }
   };
 
-  const removeChannel = ({ id }) => {
+  const removeChannel = async ({ id }) => {
     if (socket.connected) {
-      socket.emit('removeChannel', { id });
+      try {
+        await socket.emit('removeChannel', { id });
+      } catch (e) {
+        rollbar.error(t(e.message));
+        toast.error(t('errors.connectionFailed'));
+      }
     } else {
-      console.log('no connection');
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
     }
   };
 
-  const renameChannel = ({ id, name }) => {
+  const renameChannel = async ({ id, name }) => {
     if (socket.connected) {
-      socket.emit('renameChannel', { id, name });
+      try {
+        await socket.emit('renameChannel', { id, name });
+      } catch (e) {
+        rollbar.error(t(e.message));
+        toast.error(t('errors.connectionFailed'));
+      }
     } else {
-      console.log('no connection');
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
     }
   };
 

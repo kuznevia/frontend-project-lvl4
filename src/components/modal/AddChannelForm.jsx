@@ -41,7 +41,7 @@ const AddChannelForm = () => {
       return;
     }
     addChannel({ name: text });
-    toast.success(t('channelAdded'));
+    toast.success(t('toastLabels.channelAdded'));
     dispatch(closeModal());
   };
 
@@ -53,7 +53,7 @@ const AddChannelForm = () => {
   return (
     <Modal onSubmit={handleAdd} show={isOpened} onHide={handleClose} onEntered={onEntered}>
       <Modal.Header>
-        <Modal.Title>{t('addNewChannel')}</Modal.Title>
+        <Modal.Title>{t('modalLabels.addNewChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <form className="form-group">
@@ -65,14 +65,14 @@ const AddChannelForm = () => {
             onChange={handleInputChange}
             ref={inputRef}
           />
-          <label htmlFor="name" hidden>{t('channelName')}</label>
-          {alert && <span className="text-danger">{t(alert.type)}</span>}
+          <label htmlFor="name" hidden>{t('modalLabels.channelName')}</label>
+          {alert && <span className="text-danger">{t(`errors.${alert.type}`)}</span>}
           <div className="d-flex justify-content-end">
             <Button className="mr-2" type="button" variant="secondary" onClick={handleClose}>
-              {t('cancel')}
+              {t('actions.cancel')}
             </Button>
             <Button type="submit" variant="primary">
-              {t('send')}
+              {t('actions.send')}
             </Button>
           </div>
         </form>
