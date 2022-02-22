@@ -27,6 +27,8 @@ export default async (socket) => {
     captureUncaught: true,
   };
 
+  console.log(rollbarConfig);
+
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>

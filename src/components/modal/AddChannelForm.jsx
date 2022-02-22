@@ -37,7 +37,7 @@ const AddChannelForm = () => {
     }
     const checkUniqueNames = channelsList.filter((channel) => channel.name === text);
     if (checkUniqueNames.length > 0) {
-      setAlert({ type: 'emptyName' });
+      setAlert({ type: 'uniqueName' });
       return;
     }
     addChannel({ name: text });
