@@ -49,11 +49,12 @@ const RenameChannelForm = () => {
     try {
       await renameChannel({ name: text, id });
       toast.success(t('toastLabels.channelRenamed'));
+      dispatch(closeModal());
     } catch (error) {
-      rollbar.error(t('errors.connectionFailed'));
+      rollbar.error(error);
       toast.error(t('errors.connectionFailed'));
+      setInputDisabled(false);
     }
-    dispatch(closeModal());
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', {

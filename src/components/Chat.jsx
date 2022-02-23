@@ -48,7 +48,7 @@ const Chat = () => {
         logout();
         return;
       }
-      rollbar.error(t('errors.connectionFailed'));
+      rollbar.error(e);
       toast.error(t('errors.connectionFailed'));
     }
   };

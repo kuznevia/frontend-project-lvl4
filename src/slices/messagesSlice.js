@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice } from '@reduxjs/toolkit';
+import { deleteChannel } from './channelsSlice.js';
 
 const initialState = {
   messages: [],
@@ -21,10 +22,12 @@ export const messagesSlice = createSlice({
     setActiveUser: (state, action) => {
       state.activeUser = action.payload;
     },
-    deleteMessages: (state, action) => {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(deleteChannel, (state, action) => {
       const { id } = action.payload;
       state.messages = state.messages.filter((message) => message.channelId !== id);
-    },
+    });
   },
 });
 
@@ -32,7 +35,6 @@ export const {
   sendNewMessages,
   visualizeInitialMessages,
   setActiveUser,
-  deleteMessages,
 } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

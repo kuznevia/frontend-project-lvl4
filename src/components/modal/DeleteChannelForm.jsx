@@ -19,11 +19,11 @@ const DeleteChannelForm = () => {
     try {
       await removeChannel({ id });
       toast.success(t('toastLabels.channelRemoved'));
+      dispatch(closeModal());
     } catch (error) {
-      rollbar.error(t('errors.connectionFailed'));
+      rollbar.error(error);
       toast.error(t('errors.connectionFailed'));
     }
-    dispatch(closeModal());
   };
 
   const handleClose = () => {

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { sendNewMessages, deleteMessages } from '../slices/messagesSlice.js';
+import { sendNewMessages } from '../slices/messagesSlice.js';
 import {
   addNewChannel,
-  setCurrentChannel,
   deleteChannel,
   channelRename,
 } from '../slices/channelsSlice.js';
@@ -23,8 +22,6 @@ export const ApiContextProvider = ({ children, socket }) => {
 
   socket.on('removeChannel', (id) => {
     dispatch(deleteChannel(id));
-    dispatch(deleteMessages(id));
-    dispatch(setCurrentChannel(1));
   });
 
   socket.on('renameChannel', (id, name) => {

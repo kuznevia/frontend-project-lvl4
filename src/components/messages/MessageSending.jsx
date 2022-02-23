@@ -32,12 +32,12 @@ const MessageSending = ({ activeChannelId }) => {
         user: activeUser,
         channelId: activeChannelId,
       });
+      setInputText('');
     } catch (error) {
-      rollbar.error(t('errors.connectionFailed'));
+      rollbar.error(error);
       toast.error(t('errors.connectionFailed'));
     }
     setInputDisabled(false);
-    setInputText('');
     inputRef.current.focus();
   };
 

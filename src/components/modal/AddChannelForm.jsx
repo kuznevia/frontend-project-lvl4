@@ -50,11 +50,12 @@ const AddChannelForm = () => {
       const { id } = response;
       dispatch(setCurrentChannel(id));
       toast.success(t('toastLabels.channelAdded'));
+      dispatch(closeModal());
     } catch (error) {
-      rollbar.error(t('errors.connectionFailed'));
+      rollbar.error(error);
       toast.error(t('errors.connectionFailed'));
+      setInputDisabled(false);
     }
-    dispatch(closeModal());
   };
 
   const inputClassNames = cn('w-100', 'border', 'rounded', 'p-2', 'mb-2', 'form-control', {
