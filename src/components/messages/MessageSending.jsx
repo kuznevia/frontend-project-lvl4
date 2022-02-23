@@ -1,6 +1,8 @@
 import React, { useState, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
+import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 
@@ -9,6 +11,7 @@ const MessageSending = ({ activeChannelId }) => {
   const [inputDisabled, setInputDisabled] = useState(false);
   const { sendMessage } = useContext(ApiContext);
   const inputRef = useRef(null);
+  const rollbar = useRollbar();
   const activeUser = useSelector((state) => state.messages.activeUser);
 
   const { t } = useTranslation();
@@ -23,11 +26,16 @@ const MessageSending = ({ activeChannelId }) => {
       return;
     }
     setInputDisabled(true);
-    await sendMessage({
-      text: filter.clean(inputText),
-      user: activeUser,
-      channelId: activeChannelId,
-    });
+    try {
+      await sendMessage({
+        text: filter.clean(inputText),
+        user: activeUser,
+        channelId: activeChannelId,
+      });
+    } catch (error) {
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
+    }
     setInputDisabled(false);
     setInputText('');
     inputRef.current.focus();

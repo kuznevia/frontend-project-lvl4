@@ -2,16 +2,20 @@ import React, { useState, useRef, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRollbar } from '@rollbar/react';
 import { Button, Modal } from 'react-bootstrap';
 import cn from 'classnames';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 import { closeModal } from '../../slices/modalSlice.js';
+import { setCurrentChannel } from '../../slices/channelsSlice.js';
 
 const AddChannelForm = () => {
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
+  const [inputDisabled, setInputDisabled] = useState(false);
   const channelsList = useSelector((state) => state.channels.channels);
   const inputRef = useRef(null);
+  const rollbar = useRollbar();
   const { t } = useTranslation();
   const { addChannel } = useContext(ApiContext);
   const isOpened = useSelector((state) => state.modal.isOpened);
@@ -29,7 +33,7 @@ const AddChannelForm = () => {
     inputRef.current.focus();
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (text === '') {
       setAlert({ type: 'emptyName' });
@@ -40,8 +44,16 @@ const AddChannelForm = () => {
       setAlert({ type: 'uniqueName' });
       return;
     }
-    addChannel({ name: text });
-    toast.success(t('toastLabels.channelAdded'));
+    setInputDisabled(true);
+    try {
+      const response = await addChannel({ name: text });
+      const { id } = response;
+      dispatch(setCurrentChannel(id));
+      toast.success(t('toastLabels.channelAdded'));
+    } catch (error) {
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
+    }
     dispatch(closeModal());
   };
 
@@ -64,6 +76,7 @@ const AddChannelForm = () => {
             value={text}
             onChange={handleInputChange}
             ref={inputRef}
+            disabled={inputDisabled}
           />
           <label htmlFor="name" hidden>{t('modalLabels.channelName')}</label>
           {alert && <span className="text-danger">{t(`errors.${alert.type}`)}</span>}

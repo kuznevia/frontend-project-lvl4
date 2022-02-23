@@ -1,8 +1,5 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useRollbar } from '@rollbar/react';
-import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 import { sendNewMessages, deleteMessages } from '../slices/messagesSlice.js';
 import {
   addNewChannel,
@@ -15,8 +12,6 @@ export const ApiContext = React.createContext(null);
 
 export const ApiContextProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
-  const rollbar = useRollbar();
-  const { t } = useTranslation();
 
   socket.on('newMessage', (message) => {
     dispatch(sendNewMessages({ message }));
@@ -36,68 +31,37 @@ export const ApiContextProvider = ({ children, socket }) => {
     dispatch(channelRename(id, name));
   });
 
-  const sendMessage = ({ text, user, channelId }) => {
-    socket.volatile.emit('newMessage', { text, user, channelId }, (response) => {
-      if (response.status !== 'ok') {
-        rollbar.error(t('errors.connectionFailed'));
-        toast.error(t('errors.connectionFailed'));
+  const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {
+    // eslint-disable-next-line functional/no-let
+    let state = 'pending';
+    const timer = setTimeout(() => {
+      state = 'rejected';
+      reject();
+    }, 3000);
+
+    socketFunc(...args, (response) => {
+      if (state !== 'pending') return;
+
+      clearTimeout(timer);
+
+      if (response.status === 'ok') {
+        state = 'resolved';
+        resolve(response.data);
       }
+
+      reject();
     });
-  };
+  });
 
-  const addChannel = async ({ name }) => {
-    if (socket.connected) {
-      try {
-        await socket.emit('newChannel', { name }, (response) => {
-          const { id } = response.data;
-          dispatch(setCurrentChannel(id));
-        });
-      } catch (e) {
-        rollbar.error(t(e.message));
-        toast.error(t('errors.connectionFailed'));
-      }
-    } else {
-      rollbar.error(t('errors.connectionFailed'));
-      toast.error(t('errors.connectionFailed'));
-    }
-  };
-
-  const removeChannel = async ({ id }) => {
-    if (socket.connected) {
-      try {
-        await socket.emit('removeChannel', { id });
-      } catch (e) {
-        rollbar.error(t(e.message));
-        toast.error(t('errors.connectionFailed'));
-      }
-    } else {
-      rollbar.error(t('errors.connectionFailed'));
-      toast.error(t('errors.connectionFailed'));
-    }
-  };
-
-  const renameChannel = async ({ id, name }) => {
-    if (socket.connected) {
-      try {
-        await socket.emit('renameChannel', { id, name });
-      } catch (e) {
-        rollbar.error(t(e.message));
-        toast.error(t('errors.connectionFailed'));
-      }
-    } else {
-      rollbar.error(t('errors.connectionFailed'));
-      toast.error(t('errors.connectionFailed'));
-    }
+  const api = {
+    sendMessage: withAcknowledgement((...args) => socket.volatile.emit('newMessage', ...args)),
+    addChannel: withAcknowledgement((...args) => socket.volatile.emit('newChannel', ...args)),
+    renameChannel: withAcknowledgement((...args) => socket.volatile.emit('renameChannel', ...args)),
+    removeChannel: withAcknowledgement((...args) => socket.volatile.emit('removeChannel', ...args)),
   };
 
   return (
-    <ApiContext.Provider value={{
-      sendMessage,
-      addChannel,
-      removeChannel,
-      renameChannel,
-    }}
-    >
+    <ApiContext.Provider value={api}>
       {children}
     </ApiContext.Provider>
   );

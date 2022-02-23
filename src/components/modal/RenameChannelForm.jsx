@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRollbar } from '@rollbar/react';
 import cn from 'classnames';
 import { toast } from 'react-toastify';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
@@ -10,9 +11,11 @@ import { closeModal } from '../../slices/modalSlice.js';
 const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
+  const rollbar = useRollbar();
   const isOpened = useSelector((state) => state.modal.isOpened);
   const id = useSelector((state) => state.modal.changingChannelId);
   const [text, setText] = useState('');
+  const [inputDisabled, setInputDisabled] = useState(false);
   const [alert, setAlert] = useState(false);
   const { renameChannel } = useContext(ApiContext);
   const dispatch = useDispatch();
@@ -31,7 +34,7 @@ const RenameChannelForm = () => {
     dispatch(closeModal());
   };
 
-  const handleRename = (e) => {
+  const handleRename = async (e) => {
     e.preventDefault();
     if (text === '') {
       setAlert('Name cant be empty');
@@ -42,8 +45,14 @@ const RenameChannelForm = () => {
       setAlert('Channel name has to be unique');
       return;
     }
-    toast.success(t('toastLabels.channelRenamed'));
-    renameChannel({ name: text, id });
+    setInputDisabled(true);
+    try {
+      await renameChannel({ name: text, id });
+      toast.success(t('toastLabels.channelRenamed'));
+    } catch (error) {
+      rollbar.error(t('errors.connectionFailed'));
+      toast.error(t('errors.connectionFailed'));
+    }
     dispatch(closeModal());
   };
 
@@ -71,6 +80,7 @@ const RenameChannelForm = () => {
             value={text}
             onChange={handleInputChange}
             ref={inputRef}
+            disabled={inputDisabled}
           />
           <label htmlFor="name" hidden>{t('modalLabels.channelName')}</label>
           {alert && <span className="text-danger">{alert}</span>}
