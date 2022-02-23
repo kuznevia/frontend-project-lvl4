@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
@@ -8,6 +8,7 @@ const MessageSending = ({ activeChannelId }) => {
   const [inputText, setInputText] = useState('');
   const [inputDisabled, setInputDisabled] = useState(false);
   const { sendMessage } = useContext(ApiContext);
+  const inputRef = useRef(null);
   const activeUser = useSelector((state) => state.messages.activeUser);
 
   const { t } = useTranslation();
@@ -29,12 +30,13 @@ const MessageSending = ({ activeChannelId }) => {
     });
     setInputDisabled(false);
     setInputText('');
+    inputRef.current.focus();
   };
 
   return (
     <form className="py-1 border rounded-2" onSubmit={handleFormSubmit}>
       <div className="input-group has-validation">
-        <input id="message-input-box" className="border-0 p-0 px-2 form-control" value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} placeholder="Введите сообщение..." disabled={inputDisabled} />
+        <input id="message-input-box" className="border-0 p-0 px-2 form-control" ref={inputRef} value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} placeholder="Введите сообщение..." disabled={inputDisabled} />
         <div className="input-group-append">
           <button type="submit" className="btn btn-group-vertical">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

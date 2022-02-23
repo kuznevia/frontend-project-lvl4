@@ -36,18 +36,13 @@ export const ApiContextProvider = ({ children, socket }) => {
     dispatch(channelRename(id, name));
   });
 
-  const sendMessage = async ({ text, user, channelId }) => {
-    if (socket.connected) {
-      try {
-        await socket.emit('newMessage', { text, user, channelId });
-      } catch (e) {
-        rollbar.error(t(e.message));
+  const sendMessage = ({ text, user, channelId }) => {
+    socket.volatile.emit('newMessage', { text, user, channelId }, (response) => {
+      if (response.status !== 'ok') {
+        rollbar.error(t('errors.connectionFailed'));
         toast.error(t('errors.connectionFailed'));
       }
-    } else {
-      rollbar.error(t('errors.connectionFailed'));
-      toast.error(t('errors.connectionFailed'));
-    }
+    });
   };
 
   const addChannel = async ({ name }) => {
