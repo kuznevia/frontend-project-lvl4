@@ -1,10 +1,7 @@
 import React from 'react';
 
-const MessageListing = ({ messages, filteredMessages }) => {
-  if (!messages) {
-    return null;
-  }
-  if (messages.length === 0) {
+const MessageListing = ({ filteredMessages }) => {
+  if (filteredMessages.length === 0) {
     return null;
   }
 
@@ -23,6 +20,10 @@ const MessageListing = ({ messages, filteredMessages }) => {
         ))}
     </div>
   );
+};
+
+MessageListing.defaultProps = {
+  filteredMessages: null,
 };
 
 export default MessageListing;

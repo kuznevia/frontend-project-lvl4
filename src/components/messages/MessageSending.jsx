@@ -1,14 +1,13 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 
 const MessageSending = ({ activeChannelId }) => {
-  const [inputText, setInputText] = useState('');
-  const [inputDisabled, setInputDisabled] = useState(false);
   const { sendMessage } = useContext(ApiContext);
   const inputRef = useRef(null);
   const rollbar = useRollbar();
@@ -16,35 +15,38 @@ const MessageSending = ({ activeChannelId }) => {
 
   const { t } = useTranslation();
 
-  const handleInputChange = (e) => {
-    setInputText(e.target.value);
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    if (inputText === '') {
-      return;
-    }
-    setInputDisabled(true);
-    try {
-      await sendMessage({
-        text: filter.clean(inputText),
-        user: activeUser,
-        channelId: activeChannelId,
-      });
-      setInputText('');
-    } catch (error) {
-      rollbar.error(error);
-      toast.error(t('errors.connectionFailed'));
-    }
-    setInputDisabled(false);
-    inputRef.current.focus();
-  };
+  const formik = useFormik({
+    initialValues: {
+      messageBox: '',
+    },
+    onSubmit: async ({ messageBox }, actions) => {
+      if (messageBox === '') {
+        return;
+      }
+      try {
+        await sendMessage({
+          text: filter.clean(messageBox),
+          user: activeUser,
+          channelId: activeChannelId,
+        });
+        actions.resetForm({
+          values: {
+            messageBox: '',
+          },
+        });
+        actions.setSubmitting(false);
+      } catch (error) {
+        rollbar.error(error);
+        toast.error(t('errors.connectionFailed'));
+      }
+      inputRef.current.focus();
+    },
+  });
 
   return (
-    <form className="py-1 border rounded-2" onSubmit={handleFormSubmit}>
+    <form className="py-1 border rounded-2" onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}>
       <div className="input-group has-validation">
-        <input id="message-input-box" className="border-0 p-0 px-2 form-control" ref={inputRef} value={inputText} aria-label="Новое сообщение" onChange={handleInputChange} placeholder="Введите сообщение..." disabled={inputDisabled} />
+        <input id="messageBox" name="messageBox" className="border-0 p-0 px-2 form-control" ref={inputRef} value={formik.values.messageBox} aria-label="Новое сообщение" onChange={formik.handleChange} placeholder="Введите сообщение..." disabled={formik.isSubmitting} />
         <div className="input-group-append">
           <button type="submit" className="btn btn-group-vertical">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

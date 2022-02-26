@@ -24,7 +24,7 @@ const Channels = () => {
   };
 
   useEffect(() => {
-    const messageInput = document.getElementById('message-input-box');
+    const messageInput = document.getElementById('messageBox');
     messageInput.focus();
     const chatBox = document.getElementById('chat-box');
     chatBox.scrollTop = chatBox.scrollHeight;

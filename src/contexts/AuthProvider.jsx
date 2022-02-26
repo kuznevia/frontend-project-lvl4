@@ -3,8 +3,14 @@ import React, { useState } from 'react';
 export const AuthContext = React.createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const authToken = localStorage.getItem('token');
-  const [authentificated, setAuthentificated] = useState(!!authToken);
+  const getAuthToken = () => {
+    if (localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
+  };
+
+  const [authentificated, setAuthentificated] = useState(getAuthToken);
 
   const logout = () => {
     localStorage.removeItem('username');

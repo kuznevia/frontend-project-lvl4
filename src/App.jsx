@@ -17,10 +17,11 @@ import Nav from './components/NavBar.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import routes from './routes.js';
 import Modal from './components/modal/Modal.jsx';
+import { selectModalType } from './selectors/selectors.js';
 
 const App = () => {
   const toastAutoCloseTime = 5000;
-  const currentModalType = useSelector((state) => state.modal.modalType);
+  const currentModalType = useSelector(selectModalType);
 
   return (
     <Router>

@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import filter from 'leo-profanity';
 import MessageSending from './MessageSending.jsx';
 import MessageListing from './MessageListing.jsx';
+import { selectMessages, selectChannels, selectChannelId } from '../../selectors/selectors.js';
 
 const Messages = () => {
-  const messages = useSelector((state) => state.messages.messages);
-  const channels = useSelector((state) => state.channels.channels);
-  const activeChannelId = useSelector((state) => state.channels.currentChannelId);
-  const filteredMessages = messages.filter((message) => message.channelId === activeChannelId);
+  const activeChannelId = useSelector(selectChannelId);
+  const selectFilteredMessages = createSelector(selectMessages,
+    (messages) => messages.filter((message) => message.channelId === activeChannelId));
+  const filteredMessages = useSelector(selectFilteredMessages);
+  const selectactiveChannel = createSelector(selectChannels,
+    (channels) => channels.filter((channel) => channel.id === activeChannelId));
+  const [activeChannel] = useSelector(selectactiveChannel);
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -17,7 +23,6 @@ const Messages = () => {
   }, []);
 
   const activeChannelName = () => {
-    const [activeChannel] = channels.filter((channel) => channel.id === activeChannelId);
     if (activeChannel === undefined) {
       return null;
     }
@@ -44,7 +49,7 @@ const Messages = () => {
           </span>
         </div>
         <div id="chat-box" className="overflow-auto px-5">
-          <MessageListing messages={messages} filteredMessages={filteredMessages} />
+          <MessageListing filteredMessages={filteredMessages} />
         </div>
         <div className="mt-auto px-5 py-3">
           <MessageSending activeChannelId={activeChannelId} />
