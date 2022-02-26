@@ -1,33 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { sendNewMessages } from '../slices/messagesSlice.js';
-import {
-  addNewChannel,
-  deleteChannel,
-  channelRename,
-} from '../slices/channelsSlice.js';
 
 export const ApiContext = React.createContext(null);
 
 export const ApiContextProvider = ({ children, socket }) => {
-  const dispatch = useDispatch();
-
-  socket.on('newMessage', (message) => {
-    dispatch(sendNewMessages({ message }));
-  });
-
-  socket.on('newChannel', (channel) => {
-    dispatch(addNewChannel({ channel }));
-  });
-
-  socket.on('removeChannel', (id) => {
-    dispatch(deleteChannel(id));
-  });
-
-  socket.on('renameChannel', (id, name) => {
-    dispatch(channelRename(id, name));
-  });
-
   const withAcknowledgement = (socketFunc) => (...args) => new Promise((resolve, reject) => {
     // eslint-disable-next-line functional/no-let
     let state = 'pending';

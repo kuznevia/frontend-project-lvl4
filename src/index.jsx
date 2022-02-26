@@ -9,6 +9,12 @@ import { ApiContextProvider } from './contexts/ApiContextProvider.jsx';
 import App from './App.jsx';
 import store from './slices/index.js';
 import resources from './resources/index.js';
+import { sendNewMessages } from './slices/messagesSlice.js';
+import {
+  addNewChannel,
+  deleteChannel,
+  channelRename,
+} from './slices/channelsSlice.js';
 
 export default async (socket) => {
   const i18nextInstance = i18n.createInstance();
@@ -26,6 +32,23 @@ export default async (socket) => {
     captureUnhandledRejections: true,
     captureUncaught: true,
   };
+
+  socket.on('newMessage', (message) => {
+    store.dispatch(sendNewMessages({ message }));
+  });
+
+  socket.on('newChannel', (channel) => {
+    store.dispatch(addNewChannel({ channel }));
+  });
+
+  socket.on('removeChannel', (id) => {
+    store.dispatch(deleteChannel(id));
+  });
+
+  socket.on('renameChannel', (id, name) => {
+    // @ts-ignore
+    store.dispatch(channelRename(id, name));
+  });
 
   return (
     <RollbarProvider config={rollbarConfig}>
