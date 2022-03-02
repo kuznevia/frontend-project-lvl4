@@ -4,6 +4,7 @@ import i18n from 'i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import filter from 'leo-profanity';
 import { AuthProvider } from './contexts/AuthProvider.jsx';
 import { ApiContextProvider } from './contexts/ApiContextProvider.jsx';
 import App from './App.jsx';
@@ -24,6 +25,8 @@ export default async (socket) => {
     debug: true,
     resources,
   });
+
+  filter.loadDictionary('en');
 
   const rollbarConfig = {
     accessToken: process.env.ROLLBAR_ACCESS_TOKEN,

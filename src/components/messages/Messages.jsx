@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import filter from 'leo-profanity';
+import _ from 'lodash';
 import MessageSending from './MessageSending.jsx';
 import MessageListing from './MessageListing.jsx';
 import { selectFilteredMessages, selectChannelId, selectactiveChannel } from '../../selectors/selectors.js';
@@ -13,17 +13,6 @@ const Messages = () => {
 
   const { t } = useTranslation();
 
-  useEffect(() => {
-    filter.loadDictionary('en');
-  }, []);
-
-  const activeChannelName = () => {
-    if (activeChannel === undefined) {
-      return null;
-    }
-    return activeChannel.name;
-  };
-
   const messageCount = filteredMessages.length;
 
   return (
@@ -34,7 +23,7 @@ const Messages = () => {
             <b>
               #
               {' '}
-              {activeChannelName()}
+              {_.get(activeChannel, 'name')}
             </b>
           </p>
           <span className="text-muted">
