@@ -4,12 +4,18 @@ import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import MessageSending from './MessageSending.jsx';
 import MessageListing from './MessageListing.jsx';
-import { selectFilteredMessages, selectChannelId, selectactiveChannel } from '../../selectors/selectors.js';
+import {
+  selectFilteredMessages,
+  selectChannelId,
+  selectactiveChannel,
+  selectActiveUser,
+} from '../../selectors/selectors.js';
 
 const Messages = () => {
   const activeChannelId = useSelector(selectChannelId);
   const filteredMessages = useSelector(selectFilteredMessages);
   const activeChannel = useSelector(selectactiveChannel);
+  const activeUser = useSelector(selectActiveUser);
 
   const { t } = useTranslation();
 
@@ -36,7 +42,7 @@ const Messages = () => {
           <MessageListing filteredMessages={filteredMessages} />
         </div>
         <div className="mt-auto px-5 py-3">
-          <MessageSending activeChannelId={activeChannelId} />
+          <MessageSending activeChannelId={activeChannelId} activeUser={activeUser} />
         </div>
       </div>
     </>

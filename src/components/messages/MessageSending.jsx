@@ -1,5 +1,4 @@
 import React, { useContext, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import { useFormik } from 'formik';
@@ -7,11 +6,10 @@ import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 
-const MessageSending = ({ activeChannelId }) => {
+const MessageSending = ({ activeChannelId, activeUser }) => {
   const { sendMessage } = useContext(ApiContext);
   const inputRef = useRef(null);
   const rollbar = useRollbar();
-  const activeUser = useSelector((state) => state.messages.activeUser);
 
   const { t } = useTranslation();
 

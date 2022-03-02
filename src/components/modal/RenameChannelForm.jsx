@@ -7,20 +7,20 @@ import cn from 'classnames';
 import { toast } from 'react-toastify';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 import { closeModal } from '../../slices/modalSlice.js';
+import { selectChangingChannelId, selectModalOpenedStatus, selectChannels } from '../../selectors/selectors.js';
 
 const RenameChannelForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const rollbar = useRollbar();
-  const isOpened = useSelector((state) => state.modal.isOpened);
-  const id = useSelector((state) => state.modal.changingChannelId);
+  const isOpened = useSelector(selectModalOpenedStatus);
+  const id = useSelector(selectChangingChannelId);
+  const channelsList = useSelector(selectChannels);
   const [text, setText] = useState('');
   const [inputDisabled, setInputDisabled] = useState(false);
   const [alert, setAlert] = useState(false);
   const { renameChannel } = useContext(ApiContext);
   const dispatch = useDispatch();
-
-  const channelsList = useSelector((state) => state.channels.channels);
 
   const onEntered = () => {
     inputRef.current.focus();

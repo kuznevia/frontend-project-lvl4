@@ -8,17 +8,18 @@ import cn from 'classnames';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
 import { closeModal } from '../../slices/modalSlice.js';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
+import { selectChannels, selectModalOpenedStatus } from '../../selectors/selectors.js';
 
 const AddChannelForm = () => {
   const [text, setText] = useState('');
   const [alert, setAlert] = useState(false);
   const [inputDisabled, setInputDisabled] = useState(false);
-  const channelsList = useSelector((state) => state.channels.channels);
+  const channelsList = useSelector(selectChannels);
   const inputRef = useRef(null);
   const rollbar = useRollbar();
   const { t } = useTranslation();
   const { addChannel } = useContext(ApiContext);
-  const isOpened = useSelector((state) => state.modal.isOpened);
+  const isOpened = useSelector(selectModalOpenedStatus);
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {

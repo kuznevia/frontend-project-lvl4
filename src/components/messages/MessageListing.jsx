@@ -23,7 +23,7 @@ const MessageListing = ({ filteredMessages }) => {
 };
 
 MessageListing.defaultProps = {
-  filteredMessages: null,
+  filteredMessages: [],
 };
 
 export default MessageListing;
