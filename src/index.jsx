@@ -37,17 +37,16 @@ export default async (socket) => {
     store.dispatch(sendNewMessages({ message }));
   });
 
-  socket.on('newChannel', (channel) => {
-    store.dispatch(addNewChannel({ channel }));
+  socket.on('newChannel', ({ name, removable, id }) => {
+    store.dispatch(addNewChannel({ name, removable, id }));
   });
 
-  socket.on('removeChannel', (id) => {
-    store.dispatch(deleteChannel(id));
+  socket.on('removeChannel', ({ id }) => {
+    store.dispatch(deleteChannel({ id }));
   });
 
-  socket.on('renameChannel', (id, name) => {
-    // @ts-ignore
-    store.dispatch(channelRename(id, name));
+  socket.on('renameChannel', ({ id, name }) => {
+    store.dispatch(channelRename({ id, name }));
   });
 
   return (

@@ -1,20 +1,15 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { createSelector } from '@reduxjs/toolkit';
 import filter from 'leo-profanity';
 import MessageSending from './MessageSending.jsx';
 import MessageListing from './MessageListing.jsx';
-import { selectMessages, selectChannels, selectChannelId } from '../../selectors/selectors.js';
+import { selectFilteredMessages, selectChannelId, selectactiveChannel } from '../../selectors/selectors.js';
 
 const Messages = () => {
   const activeChannelId = useSelector(selectChannelId);
-  const selectFilteredMessages = createSelector(selectMessages,
-    (messages) => messages.filter((message) => message.channelId === activeChannelId));
   const filteredMessages = useSelector(selectFilteredMessages);
-  const selectactiveChannel = createSelector(selectChannels,
-    (channels) => channels.filter((channel) => channel.id === activeChannelId));
-  const [activeChannel] = useSelector(selectactiveChannel);
+  const activeChannel = useSelector(selectactiveChannel);
 
   const { t } = useTranslation();
 
