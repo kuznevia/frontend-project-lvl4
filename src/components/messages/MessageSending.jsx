@@ -5,9 +5,11 @@ import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import filter from 'leo-profanity';
 import { ApiContext } from '../../contexts/ApiContextProvider.jsx';
+import { AuthContext } from '../../contexts/AuthProvider.jsx';
 
-const MessageSending = ({ activeChannelId, activeUser }) => {
+const MessageSending = ({ activeChannelId }) => {
   const { sendMessage } = useContext(ApiContext);
+  const { user } = useContext(AuthContext);
   const inputRef = useRef(null);
   const rollbar = useRollbar();
 
@@ -24,7 +26,7 @@ const MessageSending = ({ activeChannelId, activeUser }) => {
       try {
         await sendMessage({
           text: filter.clean(messageBox),
-          user: activeUser,
+          user,
           channelId: activeChannelId,
         });
         actions.resetForm({

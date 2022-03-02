@@ -8,14 +8,12 @@ import {
   selectFilteredMessages,
   selectChannelId,
   selectactiveChannel,
-  selectActiveUser,
 } from '../../selectors/selectors.js';
 
 const Messages = () => {
   const activeChannelId = useSelector(selectChannelId);
   const filteredMessages = useSelector(selectFilteredMessages);
   const activeChannel = useSelector(selectactiveChannel);
-  const activeUser = useSelector(selectActiveUser);
 
   const { t } = useTranslation();
 
@@ -42,7 +40,7 @@ const Messages = () => {
           <MessageListing filteredMessages={filteredMessages} />
         </div>
         <div className="mt-auto px-5 py-3">
-          <MessageSending activeChannelId={activeChannelId} activeUser={activeUser} />
+          <MessageSending activeChannelId={activeChannelId} />
         </div>
       </div>
     </>

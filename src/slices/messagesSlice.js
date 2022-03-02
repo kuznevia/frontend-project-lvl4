@@ -19,9 +19,6 @@ export const messagesSlice = createSlice({
     visualizeInitialMessages: (state, action) => {
       state.messages = action.payload;
     },
-    setActiveUser: (state, action) => {
-      state.activeUser = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(deleteChannel, (state, action) => {
@@ -34,7 +31,6 @@ export const messagesSlice = createSlice({
 export const {
   sendNewMessages,
   visualizeInitialMessages,
-  setActiveUser,
 } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

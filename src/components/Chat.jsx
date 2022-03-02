@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useRollbar } from '@rollbar/react';
 import Spinner from 'react-bootstrap/Spinner';
 import { setInitialChannels, setCurrentChannel } from '../slices/channelsSlice.js';
-import { visualizeInitialMessages, setActiveUser } from '../slices/messagesSlice.js';
+import { visualizeInitialMessages } from '../slices/messagesSlice.js';
 import Channels from './Channels.jsx';
 import Messages from './messages/Messages.jsx';
 import { AuthContext } from '../contexts/AuthProvider.jsx';
@@ -17,8 +17,6 @@ const Chat = () => {
   const [loaded, setLoaded] = useState(false);
   const rollbar = useRollbar();
   const { logout } = useContext(AuthContext);
-
-  dispatch(setActiveUser(localStorage.getItem('username')));
 
   const url = '/api/v1/data';
 
