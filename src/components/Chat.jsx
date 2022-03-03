@@ -16,17 +16,15 @@ const Chat = () => {
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
   const rollbar = useRollbar();
-  const { logout } = useContext(AuthContext);
+  const { logout, getAuthHeader } = useContext(AuthContext);
 
   const url = '/api/v1/data';
 
   const initialRequest = async () => {
-    const token = localStorage.getItem('token');
+    const authHeader = getAuthHeader();
     const authAxios = axios.create({
       baseUrl: url,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: authHeader,
     });
     try {
       const response = await authAxios.get(url);

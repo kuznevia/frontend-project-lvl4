@@ -15,6 +15,12 @@ export const AuthProvider = ({ children }) => {
   const [authentificated, setAuthentificated] = useState(getAuthToken);
   const [user, setUser] = useState(getUser);
 
+  const getAuthHeader = () => {
+    const userData = localStorage.getItem('token');
+
+    return userData ? { Authorization: `Bearer ${userData}` } : {};
+  };
+
   const logout = () => {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
@@ -34,6 +40,7 @@ export const AuthProvider = ({ children }) => {
       user,
       logout,
       login,
+      getAuthHeader,
     }}
     >
       {children}
