@@ -4,7 +4,3 @@
 
 ## Description
 This is a chat application with channels support.
-
-## App
-
-### [Slack-chat app link](https://kuznevia-chat.herokuapp.com/)
